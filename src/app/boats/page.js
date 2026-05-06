@@ -69,42 +69,42 @@ function BoatsPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen bg-gray-50 pb-12">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-8 md:py-12">
         {/* Page Title */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Find Your Perfect Boat</h1>
-          <p className="text-gray-600 mt-2">Browse and filter our collection of boats</p>
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">Find Your Perfect Board</h1>
+          <p className="text-gray-600 mt-2 text-sm md:text-base">Browse and filter our collection of boards</p>
         </div>
 
         {/* Search Bar */}
-        <form onSubmit={handleSearch} className="bg-white p-4 rounded-lg shadow mb-8">
+        <form onSubmit={handleSearch} className="bg-white p-3 md:p-4 rounded-lg shadow mb-6 md:mb-8">
           <input
             type="text"
-            placeholder="Search boats..."
+            placeholder="Search boards by name..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="w-full px-4 py-2 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm md:text-base"
           />
         </form>
 
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
           {/* Filters Sidebar */}
-          <div className="lg:w-64 flex-shrink-0">
+          <div className="lg:w-72 flex-shrink-0">
             {/* Mobile Filter Toggle */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="lg:hidden w-full mb-4 flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg"
+              className="lg:hidden w-full mb-4 flex items-center justify-center gap-2 bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white px-4 py-3 rounded-lg font-bold transition transform hover:scale-105 active:scale-95"
             >
-              <FaSlidersH /> Filters
+              <FaSlidersH /> {showFilters ? 'Hide Filters' : 'Show Filters'}
             </button>
 
             {/* Filters */}
-            <div className={`${showFilters ? 'block' : 'hidden'} lg:block bg-white p-6 rounded-lg shadow`}>
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Filters</h3>
+            <div className={`${showFilters ? 'block' : 'hidden'} lg:block bg-white p-4 md:p-6 rounded-lg shadow`}>
+              <h3 className="text-lg font-bold text-gray-900 mb-4 md:mb-6">Filters</h3>
 
               {/* Type Filter */}
-              <div className="mb-6">
+              <div className="mb-4 md:mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Type</label>
                 <select
                   value={type}
@@ -112,7 +112,7 @@ function BoatsPageContent() {
                     setType(e.target.value);
                     setPage(1);
                   }}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full px-3 py-2 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 text-sm md:text-base"
                 >
                   <option value="all">All Types</option>
                   <option value="rent">Rent</option>
@@ -121,7 +121,7 @@ function BoatsPageContent() {
               </div>
 
               {/* Category Filter */}
-              <div className="mb-6">
+              <div className="mb-4 md:mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
                 <select
                   value={category}
@@ -129,7 +129,7 @@ function BoatsPageContent() {
                     setCategory(e.target.value);
                     setPage(1);
                   }}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full px-3 py-2 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 text-sm md:text-base"
                 >
                   <option value="all">All Categories</option>
                   <option value="Luxury">Luxury</option>
@@ -141,8 +141,8 @@ function BoatsPageContent() {
               </div>
 
               {/* Price Range */}
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+              <div className="mb-4 md:mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Price Range ($)</label>
                 <div className="flex gap-2">
                   <input
                     type="number"
@@ -152,7 +152,7 @@ function BoatsPageContent() {
                       setMinPrice(e.target.value);
                       setPage(1);
                     }}
-                    className="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                    className="w-1/2 px-3 py-2 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 text-sm md:text-base"
                   />
                   <input
                     type="number"
@@ -162,7 +162,7 @@ function BoatsPageContent() {
                       setMaxPrice(e.target.value);
                       setPage(1);
                     }}
-                    className="w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                    className="w-1/2 px-3 py-2 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 text-sm md:text-base"
                   />
                 </div>
               </div>
@@ -176,8 +176,9 @@ function BoatsPageContent() {
                   setCategory('all');
                   setType('all');
                   setPage(1);
+                  setShowFilters(false);
                 }}
-                className="w-full bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold py-2 rounded-lg transition"
+                className="w-full bg-gradient-to-r from-gray-300 to-gray-400 hover:from-gray-400 hover:to-gray-500 text-gray-900 font-bold py-2 md:py-3 rounded-lg transition transform hover:scale-105 active:scale-95 text-sm md:text-base"
               >
                 Reset Filters
               </button>
@@ -188,12 +189,12 @@ function BoatsPageContent() {
           <div className="flex-1">
             {loading ? (
               <div className="text-center py-12">
-                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-                <p className="mt-4 text-gray-600">Loading boats...</p>
+                <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-teal-200 border-t-teal-600"></div>
+                <p className="mt-4 text-gray-600 text-sm md:text-base">Loading boards...</p>
               </div>
             ) : boats.length > 0 ? (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
                   {boats.map((boat) => (
                     <BoatCard key={boat._id} boat={boat} />
                   ))}
@@ -201,30 +202,30 @@ function BoatsPageContent() {
 
                 {/* Pagination */}
                 {totalPages > 1 && (
-                  <div className="flex justify-center gap-2 mt-8">
+                  <div className="flex flex-col sm:flex-row justify-center items-center gap-2 md:gap-4 mt-8 md:mt-12">
                     <button
                       onClick={() => setPage(Math.max(1, page - 1))}
                       disabled={page === 1}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50"
+                      className="px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition font-bold text-sm md:text-base"
                     >
-                      Previous
+                      ← Previous
                     </button>
-                    <span className="px-4 py-2">
-                      Page {page} of {totalPages}
+                    <span className="px-3 md:px-4 py-2 text-sm md:text-base font-medium text-gray-700">
+                      Page <span className="font-bold text-teal-600">{page}</span> of <span className="font-bold text-teal-600">{totalPages}</span>
                     </span>
                     <button
                       onClick={() => setPage(Math.min(totalPages, page + 1))}
                       disabled={page === totalPages}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50"
+                      className="px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition font-bold text-sm md:text-base"
                     >
-                      Next
+                      Next →
                     </button>
                   </div>
                 )}
               </>
             ) : (
               <div className="text-center py-12 bg-white rounded-lg">
-                <p className="text-gray-600 text-lg mb-4">No boats found matching your criteria.</p>
+                <p className="text-gray-600 text-base md:text-lg mb-4">No boards found matching your criteria.</p>
                 <button
                   onClick={() => {
                     setSearch('');
@@ -233,8 +234,9 @@ function BoatsPageContent() {
                     setCategory('all');
                     setType('all');
                     setPage(1);
+                    setShowFilters(false);
                   }}
-                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-lg transition"
+                  className="inline-block bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-bold py-2 md:py-3 px-6 md:px-8 rounded-lg transition transform hover:scale-105 active:scale-95 text-sm md:text-base"
                 >
                   Clear Filters
                 </button>

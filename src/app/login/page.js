@@ -56,47 +56,47 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-500 via-blue-500 to-cyan-400 flex items-center justify-center px-4 py-12">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-          <p className="text-gray-600 text-lg">Sign in to your SurfWave account</p>
+    <div className="min-h-screen bg-gradient-to-br from-teal-500 via-blue-500 to-cyan-400 flex items-center justify-center px-3 sm:px-4 py-8 md:py-12">
+      <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-md">
+        <div className="text-center mb-6 md:mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Welcome Back</h1>
+          <p className="text-gray-600 text-sm md:text-lg">Sign in to your SurfWave account</p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg">
+          <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg text-sm md:text-base">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
           <div>
-            <label className="block text-sm font-semibold text-gray-800 mb-2">Email Address</label>
+            <label className="block text-xs sm:text-sm font-semibold text-gray-800 mb-2">Email Address</label>
             <div className="relative">
-              <FaEnvelope className="absolute left-4 top-4 text-gray-400" />
+              <FaEnvelope className="absolute left-4 top-3 md:top-4 text-gray-400" />
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-teal-500 transition"
+                className="w-full pl-12 pr-4 py-2 md:py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-teal-500 transition text-sm md:text-base"
                 placeholder="you@example.com"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-800 mb-2">Password</label>
+            <label className="block text-xs sm:text-sm font-semibold text-gray-800 mb-2">Password</label>
             <div className="relative">
-              <FaLock className="absolute left-4 top-4 text-gray-400" />
+              <FaLock className="absolute left-4 top-3 md:top-4 text-gray-400" />
               <input
                 type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-teal-500 transition"
+                className="w-full pl-12 pr-4 py-2 md:py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-teal-500 transition text-sm md:text-base"
                 placeholder="••••••••"
               />
             </div>
@@ -105,14 +105,14 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-bold py-3 rounded-xl transition disabled:opacity-50 text-lg"
+            className="w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-bold py-2 md:py-3 rounded-xl transition disabled:opacity-50 transform hover:scale-105 active:scale-95 text-sm md:text-base"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 
-        <div className="mt-8 text-center">
-          <p className="text-gray-600 text-lg">
+        <div className="mt-6 md:mt-8 text-center">
+          <p className="text-gray-600 text-xs md:text-base">
             New to SurfWave?{' '}
             <Link href="/register" className="text-teal-600 hover:text-teal-700 font-bold">
               Create an account
