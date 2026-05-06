@@ -1,7 +1,6 @@
 'use client';
 
 // Don't try to prerender this page - always fetch fresh data
-export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 
 import { useEffect, useState, Suspense } from 'react';
