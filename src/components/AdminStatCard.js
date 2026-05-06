@@ -9,19 +9,19 @@ export default function AdminStatCard({ icon: Icon, label, value, trend, color =
   };
 
   return (
-    <div className={`bg-gradient-to-br ${colorMap[color]} rounded-xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow`}>
-      <div className="flex items-center justify-between mb-4">
-        <div className="bg-white bg-opacity-20 p-3 rounded-lg">
-          <Icon size={24} />
+    <div className={`bg-gradient-to-br ${colorMap[color]} rounded-lg md:rounded-xl p-4 md:p-6 text-white shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1 duration-300`}>
+      <div className="flex items-center justify-between mb-3 md:mb-4">
+        <div className="bg-white bg-opacity-20 p-2 md:p-3 rounded-lg">
+          <Icon size={20} className="md:w-6 md:h-6" />
         </div>
         {trend && (
-          <span className={`text-sm font-semibold ${trend > 0 ? 'text-green-200' : 'text-red-200'}`}>
+          <span className={`text-xs md:text-sm font-semibold ${trend > 0 ? 'text-green-200' : 'text-red-200'}`}>
             {trend > 0 ? '↑' : '↓'} {Math.abs(trend)}%
           </span>
         )}
       </div>
-      <p className="text-white text-opacity-90 text-sm">{label}</p>
-      <p className="text-3xl font-bold mt-2">{value}</p>
+      <p className="text-white text-opacity-90 text-xs md:text-sm">{label}</p>
+      <p className="text-2xl md:text-3xl font-bold mt-2">{value}</p>
     </div>
   );
 }
