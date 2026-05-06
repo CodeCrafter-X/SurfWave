@@ -12,18 +12,31 @@ export default function BoatsPage() {
   const searchParams = useSearchParams();
   const [boats, setBoats] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState(searchParams.get('search') || '');
-  const [minPrice, setMinPrice] = useState(searchParams.get('minPrice') || '');
-  const [maxPrice, setMaxPrice] = useState(searchParams.get('maxPrice') || '');
-  const [category, setCategory] = useState(searchParams.get('category') || 'all');
-  const [type, setType] = useState(searchParams.get('type') || 'all');
+  const [search, setSearch] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [category, setCategory] = useState('all');
+  const [type, setType] = useState('all');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    fetchBoats();
-  }, [search, minPrice, maxPrice, category, type, page]);
+    // Set initial values from URL search params on client-side only
+    setIsClient(true);
+    setSearch(searchParams.get('search') || '');
+    setMinPrice(searchParams.get('minPrice') || '');
+    setMaxPrice(searchParams.get('maxPrice') || '');
+    setCategory(searchParams.get('category') || 'all');
+    setType(searchParams.get('type') || 'all');
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (isClient) {
+      fetchBoats();
+    }
+  }, [search, minPrice, maxPrice, category, type, page, isClient]);
 
   async function fetchBoats() {
     try {
