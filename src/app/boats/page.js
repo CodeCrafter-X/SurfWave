@@ -1,14 +1,17 @@
 'use client';
 
+// Don't try to prerender this page - always fetch fresh data
+export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { FaSlidersH } from 'react-icons/fa';
 import BoatCard from '@/components/BoatCard';
 
-export default function BoatsPage() {
+// Move component that uses useSearchParams into a separate component
+function BoatsPageContent() {
   const searchParams = useSearchParams();
   const [boats, setBoats] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,23 +23,20 @@ export default function BoatsPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // Set initial values from URL search params on client-side only
-    setIsClient(true);
+    // Initialize from URL params on mount
     setSearch(searchParams.get('search') || '');
     setMinPrice(searchParams.get('minPrice') || '');
     setMaxPrice(searchParams.get('maxPrice') || '');
     setCategory(searchParams.get('category') || 'all');
     setType(searchParams.get('type') || 'all');
+    setPage(1);
   }, [searchParams]);
 
   useEffect(() => {
-    if (isClient) {
-      fetchBoats();
-    }
-  }, [search, minPrice, maxPrice, category, type, page, isClient]);
+    fetchBoats();
+  }, [search, minPrice, maxPrice, category, type, page]);
 
   async function fetchBoats() {
     try {
@@ -245,5 +245,21 @@ export default function BoatsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Default export with Suspense boundary
+export default function BoatsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <p className="mt-4 text-gray-600">Loading boats...</p>
+        </div>
+      </div>
+    }>
+      <BoatsPageContent />
+    </Suspense>
   );
 }
