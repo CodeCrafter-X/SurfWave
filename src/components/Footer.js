@@ -9,9 +9,12 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-12">
           {/* Brand */}
-          <div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-3 text-teal-400">🌊 SurfWave</h3>
-            <p className="text-gray-400 text-sm md:text-base leading-relaxed">Premium board rentals and sales at Pottuvil Arugambe Beach, Sri Lanka.</p>
+          <div className="bg-gradient-to-br from-teal-600 to-blue-600 p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white flex items-center gap-2">
+              <span className="text-3xl">🌊</span>
+              SurfWave
+            </h3>
+            <p className="text-gray-100 text-sm md:text-base leading-relaxed">Premium board rentals and sales at Pottuvil Arugambe Beach, Sri Lanka.</p>
           </div>
 
           {/* Quick Links */}
@@ -20,7 +23,6 @@ export default function Footer() {
             <ul className="space-y-2 md:space-y-3">
               <li><Link href="/" className="text-gray-400 hover:text-teal-400 transition text-sm md:text-base">Home</Link></li>
               <li><Link href="/boats" className="text-gray-400 hover:text-teal-400 transition text-sm md:text-base">Browse Boards</Link></li>
-              <li><Link href="/dashboard" className="text-gray-400 hover:text-teal-400 transition text-sm md:text-base">My Bookings</Link></li>
               <li><Link href="/contact" className="text-gray-400 hover:text-teal-400 transition text-sm md:text-base">Contact Us</Link></li>
             </ul>
           </div>

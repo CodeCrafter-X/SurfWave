@@ -63,52 +63,63 @@ export default function Navigation() {
   const closeMobileMenu = () => setIsOpen(false);
 
   return (
-    <nav className="bg-gradient-to-r from-teal-600 to-blue-600 text-white sticky top-0 z-50 shadow-lg">
+    <nav className="bg-gradient-to-r from-gray-900 via-blue-900 to-gray-900 text-white sticky top-0 z-50 shadow-2xl border-b border-blue-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="text-2xl md:text-3xl font-bold hover:text-teal-100 transition whitespace-nowrap">
-            🌊 SurfWave
+          <Link href="/" className="group">
+            <div className="relative h-12 md:h-14 px-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 shadow-lg group-hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+              <img src="/surf-img/rimaz-logo.jpeg" alt="SurfWave Logo" className="h-10 md:h-12 object-contain drop-shadow-lg" />
+            </div>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="hover:text-teal-100 transition font-medium text-lg">
+            <Link href="/" className="hover:text-blue-300 transition font-medium text-lg relative group">
               Home
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-cyan-400 group-hover:w-full transition-all duration-300"></span>
             </Link>
-            <Link href="/boats" className="hover:text-teal-100 transition font-medium text-lg">
+            <Link href="/boats" className="hover:text-blue-300 transition font-medium text-lg relative group">
               Boards
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-cyan-400 group-hover:w-full transition-all duration-300"></span>
             </Link>
-            <Link href="/contact" className="hover:text-teal-100 transition font-medium text-lg">
+            <Link href="/contact" className="hover:text-blue-300 transition font-medium text-lg relative group">
               Contact
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-cyan-400 group-hover:w-full transition-all duration-300"></span>
             </Link>
 
-            {user ? (
-              <div className="flex items-center gap-4 ml-8 border-l-2 border-teal-400 pl-8">
+            {user && user.role === 'admin' ? (
+              <div className="flex items-center gap-4 ml-8 border-l-2 border-blue-600 pl-8">
                 <Link
-                  href={user.role === 'admin' ? '/admin/dashboard' : '/dashboard'}
-                  className="bg-white text-teal-600 hover:bg-teal-50 px-6 py-2 rounded-lg font-bold transition flex items-center gap-2 shadow-md hover:shadow-lg"
+                  href="/admin/dashboard"
+                  className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 px-6 py-2 rounded-lg font-bold transition flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
                 >
                   <FaUser size={18} />
-                  {user.role === 'admin' ? 'Admin' : 'Profile'}
+                  Admin Panel
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg font-bold transition flex items-center gap-2 shadow-md hover:shadow-lg"
+                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-6 py-2 rounded-lg font-bold transition flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
+                >
+                  <FaSignOutAlt size={18} />
+                  Logout
+                </button>
+              </div>
+            ) : user ? (
+              <div className="flex items-center gap-4 ml-8 border-l-2 border-blue-600 pl-8">
+                <button
+                  onClick={handleLogout}
+                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-6 py-2 rounded-lg font-bold transition flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
                 >
                   <FaSignOutAlt size={18} />
                   Logout
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-4 ml-8 border-l-2 border-teal-400 pl-8">
-                <Link href="/login" className="bg-white text-teal-600 hover:bg-teal-50 px-6 py-2 rounded-lg font-bold transition flex items-center gap-2 shadow-md hover:shadow-lg">
+              <div className="flex items-center gap-4 ml-8 border-l-2 border-blue-600 pl-8">
+                <Link href="/login" className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 px-6 py-2 rounded-lg font-bold transition flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95">
                   <FaSignInAlt size={18} />
-                  Sign In
-                </Link>
-                <Link href="/register" className="bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg font-bold transition flex items-center gap-2 shadow-md hover:shadow-lg">
-                  <FaUserPlus size={18} />
-                  Register
+                  Admin Login
                 </Link>
               </div>
             )}
@@ -117,7 +128,7 @@ export default function Navigation() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-3xl p-2 hover:bg-teal-700 rounded-lg transition"
+            className="md:hidden text-3xl p-2 hover:bg-blue-800 rounded-lg transition transform hover:scale-110"
             aria-label={isOpen ? 'Close menu' : 'Open menu'}
           >
             {isOpen ? <FaTimes /> : <FaBars />}
@@ -126,13 +137,13 @@ export default function Navigation() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden pb-6 bg-gradient-to-b from-teal-700 to-blue-800 border-t-2 border-teal-500">
+          <div className="md:hidden pb-6 bg-gradient-to-b from-blue-900 to-gray-900 border-t-2 border-blue-700">
             <div className="px-4 py-4 space-y-3">
               {/* Navigation Links */}
               <Link 
                 href="/" 
                 onClick={closeMobileMenu}
-                className="flex items-center gap-3 px-5 py-3 hover:bg-teal-600 hover:bg-opacity-70 rounded-xl font-medium text-white transition transform hover:translate-x-1"
+                className="flex items-center gap-3 px-5 py-3 hover:bg-gradient-to-r hover:from-blue-700 hover:to-cyan-600 rounded-xl font-medium text-white transition transform hover:translate-x-1"
               >
                 <FaHome size={20} />
                 <span className="text-lg">Home</span>
@@ -140,7 +151,7 @@ export default function Navigation() {
               <Link 
                 href="/boats" 
                 onClick={closeMobileMenu}
-                className="flex items-center gap-3 px-5 py-3 hover:bg-teal-600 hover:bg-opacity-70 rounded-xl font-medium text-white transition transform hover:translate-x-1"
+                className="flex items-center gap-3 px-5 py-3 hover:bg-gradient-to-r hover:from-blue-700 hover:to-cyan-600 rounded-xl font-medium text-white transition transform hover:translate-x-1"
               >
                 <span className="text-xl">🏄</span>
                 <span className="text-lg">Browse Boards</span>
@@ -148,37 +159,39 @@ export default function Navigation() {
               <Link 
                 href="/contact" 
                 onClick={closeMobileMenu}
-                className="flex items-center gap-3 px-5 py-3 hover:bg-teal-600 hover:bg-opacity-70 rounded-xl font-medium text-white transition transform hover:translate-x-1"
+                className="flex items-center gap-3 px-5 py-3 hover:bg-gradient-to-r hover:from-blue-700 hover:to-cyan-600 rounded-xl font-medium text-white transition transform hover:translate-x-1"
               >
                 <FaPhone size={20} />
                 <span className="text-lg">Contact</span>
               </Link>
 
               {/* Divider */}
-              <div className="my-2 border-t border-teal-500 opacity-50"></div>
+              <div className="my-2 border-t border-blue-700 opacity-50"></div>
 
               {/* Auth Section */}
               {user ? (
                 <>
-                  <div className="px-5 py-3 bg-blue-900 bg-opacity-50 rounded-xl">
-                    <p className="text-sm text-blue-100 mb-1">Logged in as:</p>
+                  <div className="px-5 py-3 bg-gradient-to-r from-blue-800 to-blue-900 rounded-xl border border-blue-700">
+                    <p className="text-sm text-blue-300 mb-1">Logged in as:</p>
                     <p className="font-bold text-white text-lg">{user.name}</p>
-                    <p className="text-xs text-blue-100 capitalize">{user.role}</p>
+                    <p className="text-xs text-blue-300 capitalize">{user.role} {user.role === 'admin' && '(Owner)'}</p>
                   </div>
-                  <Link
-                    href={user.role === 'admin' ? '/admin/dashboard' : '/dashboard'}
-                    onClick={closeMobileMenu}
-                    className="w-full px-5 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition transform hover:scale-105 shadow-lg"
-                  >
-                    <FaUser size={20} />
-                    {user.role === 'admin' ? 'Admin Dashboard' : 'My Profile'}
-                  </Link>
+                  {user.role === 'admin' && (
+                    <Link
+                      href="/admin/dashboard"
+                      onClick={closeMobileMenu}
+                      className="w-full px-5 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition transform hover:scale-105 shadow-lg"
+                    >
+                      <FaUser size={20} />
+                      Admin Panel
+                    </Link>
+                  )}
                   <button
                     onClick={() => {
                       handleLogout();
                       closeMobileMenu();
                     }}
-                    className="w-full px-5 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition transform hover:scale-105 shadow-lg"
+                    className="w-full px-5 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition transform hover:scale-105 shadow-lg"
                   >
                     <FaSignOutAlt size={20} />
                     Logout
@@ -189,18 +202,10 @@ export default function Navigation() {
                   <Link 
                     href="/login" 
                     onClick={closeMobileMenu}
-                    className="w-full px-5 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition transform hover:scale-105 shadow-lg"
+                    className="w-full px-5 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition transform hover:scale-105 shadow-lg"
                   >
                     <FaSignInAlt size={20} />
-                    Sign In
-                  </Link>
-                  <Link 
-                    href="/register" 
-                    onClick={closeMobileMenu}
-                    className="w-full px-5 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition transform hover:scale-105 shadow-lg"
-                  >
-                    <FaUserPlus size={20} />
-                    Create Account
+                    Admin Login
                   </Link>
                 </>
               )}

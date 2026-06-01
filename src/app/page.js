@@ -242,7 +242,7 @@ export default function Home() {
             {reviewIndex === 0 && (
             <>
             {/* Review 1 */}
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300">
+            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300 animate-slide-left">
               <div className="flex items-center mb-4">
                 <div className="text-yellow-400 text-lg">★★★★★</div>
                 <span className="ml-2 text-gray-600 text-xs md:text-sm">(5/5)</span>
@@ -262,7 +262,7 @@ export default function Home() {
             </div>
 
             {/* Review 2 */}
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300">
+            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300 animate-slide-left" style={{animationDelay: '0.1s'}}>
               <div className="flex items-center mb-4">
                 <div className="text-yellow-400 text-lg">★★★★★</div>
                 <span className="ml-2 text-gray-600 text-xs md:text-sm">(5/5)</span>
@@ -282,7 +282,7 @@ export default function Home() {
             </div>
 
             {/* Review 3 */}
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300">
+            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300 animate-slide-left" style={{animationDelay: '0.2s'}}>
               <div className="flex items-center mb-4">
                 <div className="text-yellow-400 text-lg">★★★★★</div>
                 <span className="ml-2 text-gray-600 text-xs md:text-sm">(5/5)</span>
@@ -306,7 +306,7 @@ export default function Home() {
             {reviewIndex === 1 && (
             <>
             {/* Review 4 */}
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300">
+            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300 animate-slide-left">
               <div className="flex items-center mb-4">
                 <div className="text-yellow-400 text-lg">★★★★★</div>
                 <span className="ml-2 text-gray-600 text-xs md:text-sm">(5/5)</span>
@@ -326,7 +326,7 @@ export default function Home() {
             </div>
 
             {/* Review 5 */}
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300">
+            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300 animate-slide-left" style={{animationDelay: '0.1s'}}>
               <div className="flex items-center mb-4">
                 <div className="text-yellow-400 text-lg">★★★★★</div>
                 <span className="ml-2 text-gray-600 text-xs md:text-sm">(5/5)</span>
@@ -346,7 +346,7 @@ export default function Home() {
             </div>
 
             {/* Review 6 */}
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300">
+            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300 animate-slide-left" style={{animationDelay: '0.2s'}}>
               <div className="flex items-center mb-4">
                 <div className="text-yellow-400 text-lg">★★★★★</div>
                 <span className="ml-2 text-gray-600 text-xs md:text-sm">(5/5)</span>
@@ -400,6 +400,122 @@ export default function Home() {
                 <FaChevronRight size={20} className="md:w-6 md:h-6" />
               </button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How to Buy/Rent Section */}
+      <section className="py-16 md:py-20 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 animate-fade-down">How It Works</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-teal-500 to-blue-500 mx-auto animate-fade-up"></div>
+            <p className="text-gray-600 mt-4 text-sm md:text-lg animate-fade-up" style={{animationDelay: '0.2s'}}>Simple steps to get your perfect surfboard experience</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative">
+            {/* Animated connecting line - Desktop only */}
+            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 transform -translate-y-1/2">
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-400 via-blue-400 to-cyan-400 rounded-full animate-pulse-slow opacity-30"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-500 via-blue-500 to-cyan-500 rounded-full" style={{
+                backgroundSize: '200% 100%',
+                animation: 'flow-line 3s linear infinite'
+              }}></div>
+            </div>
+
+            {/* Step 1 */}
+            <div className="relative group animate-fade-up z-10" style={{animationDelay: '0s'}}>
+              <div className="bg-gradient-to-br from-teal-100 to-cyan-100 p-8 rounded-2xl text-center hover:shadow-2xl transition transform hover:-translate-y-2 duration-300 min-h-56 flex flex-col justify-between group-hover:from-teal-50 group-hover:to-cyan-50">
+                <div>
+                  <div className="w-16 h-16 bg-gradient-to-r from-teal-500 to-blue-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-125 transition transform duration-300">
+                    1
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">Browse Selection</h3>
+                  <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+                    Explore our collection of premium surfboards. Use filters to find exactly what you're looking for.
+                  </p>
+                </div>
+              </div>
+              <div className="hidden lg:block absolute -right-4 top-1/2 transform translate-x-full -translate-y-1/2 z-20">
+                <div className="text-4xl group-hover:text-teal-600 transition-colors duration-300 animate-bounce" style={{animationDelay: '0s'}}>→</div>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="relative group animate-fade-up z-10" style={{animationDelay: '0.15s'}}>
+              <div className="bg-gradient-to-br from-blue-100 to-cyan-100 p-8 rounded-2xl text-center hover:shadow-2xl transition transform hover:-translate-y-2 duration-300 min-h-56 flex flex-col justify-between group-hover:from-blue-50 group-hover:to-cyan-50">
+                <div>
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-125 transition transform duration-300">
+                    2
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">Check Details</h3>
+                  <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+                    View complete specifications, images, pricing, and customer reviews for each board.
+                  </p>
+                </div>
+              </div>
+              <div className="hidden lg:block absolute -right-4 top-1/2 transform translate-x-full -translate-y-1/2 z-20">
+                <div className="text-4xl group-hover:text-blue-600 transition-colors duration-300 animate-bounce" style={{animationDelay: '0.3s'}}>→</div>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="relative group animate-fade-up z-10" style={{animationDelay: '0.3s'}}>
+              <div className="bg-gradient-to-br from-cyan-100 to-blue-100 p-8 rounded-2xl text-center hover:shadow-2xl transition transform hover:-translate-y-2 duration-300 min-h-56 flex flex-col justify-between group-hover:from-cyan-50 group-hover:to-blue-50">
+                <div>
+                  <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-125 transition transform duration-300">
+                    3
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">Connect via WhatsApp</h3>
+                  <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+                    Click the WhatsApp button and instantly connect with our team for booking confirmation.
+                  </p>
+                </div>
+              </div>
+              <div className="hidden lg:block absolute -right-4 top-1/2 transform translate-x-full -translate-y-1/2 z-20">
+                <div className="text-4xl group-hover:text-cyan-600 transition-colors duration-300 animate-bounce" style={{animationDelay: '0.6s'}}>→</div>
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="relative group animate-fade-up z-10" style={{animationDelay: '0.45s'}}>
+              <div className="bg-gradient-to-br from-teal-100 to-green-100 p-8 rounded-2xl text-center hover:shadow-2xl transition transform hover:-translate-y-2 duration-300 min-h-56 flex flex-col justify-between group-hover:from-teal-50 group-hover:to-green-50">
+                <div>
+                  <div className="w-16 h-16 bg-gradient-to-r from-teal-500 to-green-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-125 transition transform duration-300">
+                    ✓
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">Start Your Adventure</h3>
+                  <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+                    Complete the booking and enjoy your new surfboard. Ride the perfect wave!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Steps Info */}
+          <div className="mt-12 md:mt-16 bg-gradient-to-r from-teal-50 to-blue-50 p-6 md:p-8 rounded-2xl border-2 border-teal-200">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              💡 Pro Tips
+            </h3>
+            <ul className="space-y-3 text-gray-700 text-sm md:text-base">
+              <li className="flex items-start gap-3">
+                <span className="text-teal-600 font-bold text-lg">•</span>
+                <span><strong>For Rentals:</strong> Select your desired date and duration when sending your WhatsApp message</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-teal-600 font-bold text-lg">•</span>
+                <span><strong>For Purchases:</strong> Ask about bulk discounts or payment plans if buying multiple boards</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-teal-600 font-bold text-lg">•</span>
+                <span><strong>Quick Booking:</strong> WhatsApp response within 30 minutes during business hours</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-teal-600 font-bold text-lg">•</span>
+                <span><strong>Free Delivery:</strong> Available for purchases above $500 in the local area</span>
+              </li>
+            </ul>
           </div>
         </div>
       </section>

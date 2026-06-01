@@ -7,16 +7,13 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import AdminSidebar from '@/components/AdminSidebar';
 import AdminStatCard from '@/components/AdminStatCard';
-import { FaBox, FaUsers, FaTicketAlt, FaDollarSign, FaSpinner, FaUser } from 'react-icons/fa';
+import { FaBox, FaUsers, FaTicketAlt, FaSpinner, FaUser } from 'react-icons/fa';
 
 export default function AdminDashboard() {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState({
     totalBoats: 0,
-    totalUsers: 0,
-    totalBookings: 0,
-    totalRevenue: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -36,9 +33,9 @@ export default function AdminDashboard() {
           setUser(data.user);
           await fetchStats();
         } else {
-          console.log('User is not admin, redirecting to dashboard');
+          console.log('User is not admin, redirecting to login');
           setLoading(false);
-          router.push('/dashboard');
+          router.push('/login');
         }
       } else {
         console.log('Auth response not ok');
@@ -54,24 +51,15 @@ export default function AdminDashboard() {
 
   async function fetchStats() {
     try {
-      const [boatsRes, usersRes, bookingsRes] = await Promise.all([
+      const [boatsRes] = await Promise.all([
         fetch('/api/boats?limit=1000', { credentials: 'include' }),
-        fetch('/api/users', { credentials: 'include' }),
-        fetch('/api/bookings?limit=1000', { credentials: 'include' }),
       ]);
 
-      if (boatsRes.ok && usersRes.ok && bookingsRes.ok) {
+      if (boatsRes.ok) {
         const boatsData = await boatsRes.json();
-        const usersData = await usersRes.json();
-        const bookingsData = await bookingsRes.json();
-
-        const totalRevenue = bookingsData.bookings?.reduce((sum, b) => sum + (b.totalPrice || 0), 0) || 0;
 
         setStats({
           totalBoats: boatsData.boats?.length || 0,
-          totalUsers: usersData.users?.filter((u) => u.role === 'user').length || 0,
-          totalBookings: bookingsData.bookings?.length || 0,
-          totalRevenue,
         });
       }
     } catch (error) {
@@ -93,27 +81,40 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex">
       <AdminSidebar />
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-64 p-4 md:p-8 pt-20 md:pt-8">
+      <main className="flex-1 md:ml-64 p-4 md:p-8 pt-20 md:pt-8 overflow-y-auto">
+        {/* Welcome Section */}
+        <div className="mb-8 md:mb-12">
+          <div className="bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl shadow-2xl p-6 md:p-10 text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-white opacity-10 rounded-full -mr-20 -mt-20"></div>
+            <div className="relative z-10">
+              <h1 className="text-3xl md:text-4xl font-bold mb-2">Welcome back, {user?.name}! 👋</h1>
+              <p className="text-blue-100 text-sm md:text-lg">Here's what's happening with your business today</p>
+            </div>
+          </div>
+        </div>
+
         {/* Admin Profile Card */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <div className="flex items-center gap-6">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-4xl">
+        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8 md:mb-12 backdrop-blur-sm">
+          <div className="flex items-center gap-6 md:gap-8">
+            <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-white text-3xl md:text-5xl shadow-lg transform hover:scale-105 transition duration-300">
               <FaUser />
             </div>
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900">{user?.name}</h2>
-              <p className="text-gray-600">{user?.email}</p>
-              <p className="text-blue-600 font-semibold mt-2">Admin Panel</p>
+            <div className="flex-1">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">{user?.name}</h2>
+              <p className="text-gray-600 text-sm md:text-base mb-2">{user?.email}</p>
+              <span className="inline-block bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-800 px-4 py-2 rounded-full text-xs md:text-sm font-semibold">
+                🛡️ Admin
+              </span>
             </div>
           </div>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
           <AdminStatCard
             icon={FaBox}
             label="Total Boards"
@@ -122,58 +123,45 @@ export default function AdminDashboard() {
             color="blue"
           />
           <AdminStatCard
-            icon={FaUsers}
-            label="Total Users"
-            value={stats.totalUsers}
-            trend={8}
-            color="green"
-          />
-          <AdminStatCard
             icon={FaTicketAlt}
-            label="Total Bookings"
-            value={stats.totalBookings}
-            trend={15}
+            label="Active Discounts"
+            value="5"
+            trend={3}
             color="purple"
-          />
-          <AdminStatCard
-            icon={FaDollarSign}
-            label="Total Revenue"
-            value={`$${(stats.totalRevenue / 1000).toFixed(1)}K`}
-            trend={20}
-            color="orange"
           />
         </div>
 
-        {/* Quick Links */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Link href="/admin/boats">
-            <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition cursor-pointer">
-              <FaBox className="text-4xl text-blue-600 mb-4" />
-              <h3 className="text-lg font-bold text-gray-900">Manage Boards</h3>
-              <p className="text-gray-600 text-sm mt-2">View and manage all boards</p>
-            </div>
-          </Link>
-          <Link href="/admin/users">
-            <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition cursor-pointer">
-              <FaUsers className="text-4xl text-green-600 mb-4" />
-              <h3 className="text-lg font-bold text-gray-900">Manage Users</h3>
-              <p className="text-gray-600 text-sm mt-2">View and manage users</p>
-            </div>
-          </Link>
-          <Link href="/admin/bookings">
-            <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition cursor-pointer">
-              <FaTicketAlt className="text-4xl text-purple-600 mb-4" />
-              <h3 className="text-lg font-bold text-gray-900">Manage Bookings</h3>
-              <p className="text-gray-600 text-sm mt-2">View and manage bookings</p>
-            </div>
-          </Link>
-          <Link href="/admin/analytics">
-            <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition cursor-pointer">
-              <FaDollarSign className="text-4xl text-orange-600 mb-4" />
-              <h3 className="text-lg font-bold text-gray-900">Analytics</h3>
-              <p className="text-gray-600 text-sm mt-2">View detailed analytics</p>
-            </div>
-          </Link>
+        {/* Quick Actions Section */}
+        <div className="mb-8 md:mb-12">
+          <h3 className="text-2xl md:text-3xl font-bold text-white mb-6">Quick Actions</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8">
+            <Link href="/admin/boats">
+              <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl shadow-xl p-6 md:p-8 hover:shadow-2xl transition transform hover:-translate-y-1 duration-300 cursor-pointer group">
+                <div className="flex items-center gap-4 md:gap-6">
+                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl bg-white bg-opacity-20 flex items-center justify-center text-white text-3xl md:text-4xl group-hover:scale-110 transition transform duration-300">
+                    <FaBox />
+                  </div>
+                  <div>
+                    <h3 className="text-xl md:text-2xl font-bold text-white">Manage Boards</h3>
+                    <p className="text-blue-100 text-sm md:text-base mt-1">Add, edit, or remove boards from inventory</p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+            <Link href="/admin/discounts">
+              <div className="bg-gradient-to-br from-purple-600 to-purple-700 rounded-2xl shadow-xl p-6 md:p-8 hover:shadow-2xl transition transform hover:-translate-y-1 duration-300 cursor-pointer group">
+                <div className="flex items-center gap-4 md:gap-6">
+                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl bg-white bg-opacity-20 flex items-center justify-center text-white text-3xl md:text-4xl group-hover:scale-110 transition transform duration-300">
+                    <FaTicketAlt />
+                  </div>
+                  <div>
+                    <h3 className="text-xl md:text-2xl font-bold text-white">Manage Discounts</h3>
+                    <p className="text-purple-100 text-sm md:text-base mt-1">Create and manage promotional offers</p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
         </div>
       </main>
     </div>

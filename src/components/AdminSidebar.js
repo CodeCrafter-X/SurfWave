@@ -5,14 +5,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   FaTachometerAlt,
-  FaUsers,
   FaBox,
   FaTicketAlt,
   FaUser,
   FaBars,
   FaTimes,
   FaSignOutAlt,
-  FaChartLine,
 } from 'react-icons/fa';
 
 export default function AdminSidebar() {
@@ -21,10 +19,7 @@ export default function AdminSidebar() {
 
   const menuItems = [
     { label: 'Dashboard', href: '/admin', icon: FaTachometerAlt },
-    { label: 'Analytics', href: '/admin/analytics', icon: FaChartLine },
     { label: 'Manage Boats', href: '/admin/boats', icon: FaBox },
-    { label: 'Manage Users', href: '/admin/users', icon: FaUsers },
-    { label: 'Manage Bookings', href: '/admin/bookings', icon: FaTicketAlt },
     { label: 'Discounts', href: '/admin/discounts', icon: FaTicketAlt },
     { label: 'Profile', href: '/admin/profile', icon: FaUser },
   ];
@@ -43,17 +38,19 @@ export default function AdminSidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-screen w-64 bg-gradient-to-b from-blue-700 to-blue-900 text-white shadow-2xl transform transition-transform duration-300 z-30 md:translate-x-0 overflow-y-auto ${
+        className={`fixed left-0 top-0 h-screen w-64 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white shadow-2xl transform transition-transform duration-300 z-30 md:translate-x-0 overflow-y-auto border-r border-gray-700 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Logo */}
-        <div className="p-4 md:p-6 border-b border-blue-600 sticky top-0 bg-gradient-to-b from-blue-700 to-blue-800">
-          <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-white to-blue-100 text-blue-700 p-2 rounded-lg font-bold text-lg shadow-md">SW</div>
+        <div className="p-4 md:p-6 border-b border-gray-700 sticky top-0 bg-gradient-to-b from-gray-900 to-gray-800">
+          <div className="flex items-center gap-3 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 p-3 rounded-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <div className="bg-white text-blue-600 p-2 rounded-lg font-bold text-lg shadow-md">
+              <span>🌊</span>
+            </div>
             <div>
               <h1 className="font-bold text-lg md:text-xl">SurfWave</h1>
-              <p className="text-blue-200 text-xs">Admin Panel</p>
+              <p className="text-blue-200 text-xs">Admin Control</p>
             </div>
           </div>
         </div>
@@ -69,13 +66,13 @@ export default function AdminSidebar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-3 px-3 md:px-4 py-2 md:py-3 rounded-lg transition-all duration-200 text-sm md:text-base ${
+                  className={`flex items-center gap-3 px-4 md:px-4 py-3 md:py-3 rounded-lg transition-all duration-200 text-sm md:text-base ${
                     active
-                      ? 'bg-white text-blue-700 font-semibold shadow-lg scale-105 transform'
-                      : 'text-blue-100 hover:bg-blue-600 hover:text-white transform hover:translate-x-1'
+                      ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold shadow-lg scale-105 transform'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white transform hover:translate-x-1'
                   }`}
                 >
-                  <Icon size={18} />
+                  <Icon size={20} />
                   <span>{item.label}</span>
                 </Link>
               );
@@ -84,13 +81,13 @@ export default function AdminSidebar() {
         </nav>
 
         {/* Bottom Section */}
-        <div className="border-t border-blue-600 p-3 md:p-4 bg-gradient-to-t from-blue-900 to-blue-800 sticky bottom-0">
+        <div className="border-t border-gray-700 p-3 md:p-4 bg-gradient-to-t from-gray-900 to-gray-800 sticky bottom-0">
           <Link
             href="/"
-            className="flex items-center gap-3 px-3 md:px-4 py-2 md:py-3 rounded-lg text-blue-100 hover:bg-gradient-to-r hover:from-red-500 hover:to-red-600 hover:text-white transition-all duration-200 text-sm md:text-base font-medium"
+            className="flex items-center gap-3 px-4 md:px-4 py-3 md:py-3 rounded-lg text-gray-300 hover:bg-gradient-to-r hover:from-red-600 hover:to-pink-600 hover:text-white transition-all duration-200 text-sm md:text-base font-medium transform hover:scale-105"
           >
-            <FaSignOutAlt size={18} />
-            <span>Logout</span>
+            <FaSignOutAlt size={20} />
+            <span>Exit Admin</span>
           </Link>
         </div>
       </aside>

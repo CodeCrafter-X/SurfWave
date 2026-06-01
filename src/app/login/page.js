@@ -59,8 +59,8 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-br from-teal-500 via-blue-500 to-cyan-400 flex items-center justify-center px-3 sm:px-4 py-8 md:py-12">
       <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-md">
         <div className="text-center mb-6 md:mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-          <p className="text-gray-600 text-sm md:text-lg">Sign in to your SurfWave account</p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Admin Login</h1>
+          <p className="text-gray-600 text-sm md:text-lg">Sign in to manage your boards and discounts</p>
         </div>
 
         {error && (
@@ -111,13 +111,13 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-6 md:mt-8 text-center">
-          <p className="text-gray-600 text-xs md:text-base">
-            New to SurfWave?{' '}
-            <Link href="/register" className="text-teal-600 hover:text-teal-700 font-bold">
-              Create an account
-            </Link>
+        <div className="mt-6 md:mt-8 text-center border-t pt-6">
+          <p className="text-gray-600 text-xs md:text-sm mb-4">
+            Only board owners/admins can login here to manage inventory and discounts
           </p>
+          <Link href="/" className="text-teal-600 hover:text-teal-700 font-bold text-sm">
+            ← Back to Home
+          </Link>
         </div>
       </div>
     </div>
