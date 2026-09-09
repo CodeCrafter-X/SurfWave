@@ -4,16 +4,18 @@ export const dynamic = 'force-dynamic';
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import Link from 'next/link';
 import AdminSidebar from '@/components/AdminSidebar';
 import AdminStatCard from '@/components/AdminStatCard';
-import { FaBox, FaUsers, FaTicketAlt, FaSpinner, FaUser } from 'react-icons/fa';
+import { FaBox, FaTicketAlt, FaSpinner, FaUser } from 'react-icons/fa';
 
 export default function AdminDashboard() {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState({
     totalBoats: 0,
+    activeDiscounts: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -28,17 +30,14 @@ export default function AdminDashboard() {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log('Auth response:', data.user.role); // Debug log
         if (data.user && data.user.role === 'admin') {
           setUser(data.user);
           await fetchStats();
         } else {
-          console.log('User is not admin, redirecting to login');
           setLoading(false);
           router.push('/login');
         }
       } else {
-        console.log('Auth response not ok');
         setLoading(false);
         router.push('/login');
       }
@@ -60,6 +59,9 @@ export default function AdminDashboard() {
 
         setStats({
           totalBoats: boatsData.boats?.length || 0,
+          activeDiscounts: boatsData.boats?.filter(
+            (boat) => boat.discountPercentage && boat.discountPercentage > 0
+          ).length || 0,
         });
       }
     } catch (error) {
@@ -81,33 +83,35 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex">
+    <div className="min-h-screen bg-slate-50 flex">
       <AdminSidebar />
 
       {/* Main Content */}
       <main className="flex-1 md:ml-64 p-4 md:p-8 pt-20 md:pt-8 overflow-y-auto">
         {/* Welcome Section */}
-        <div className="mb-8 md:mb-12">
-          <div className="bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl shadow-2xl p-6 md:p-10 text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-white opacity-10 rounded-full -mr-20 -mt-20"></div>
-            <div className="relative z-10">
-              <h1 className="text-3xl md:text-4xl font-bold mb-2">Welcome back, {user?.name}! 👋</h1>
-              <p className="text-blue-100 text-sm md:text-lg">Here's what's happening with your business today</p>
+        <div className="mb-8 overflow-hidden rounded-2xl bg-slate-950 text-white shadow-sm">
+          <div className="relative min-h-56 p-6 md:p-10">
+            <Image src="/surf-img/home-surf.png" alt="SurfWave on the water" fill priority className="object-cover opacity-45" />
+            <div className="absolute inset-0 bg-linear-to-r from-slate-950 via-slate-950/75 to-transparent" />
+            <div className="relative z-10 max-w-xl pt-8">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-cyan-300">Today at SurfWave</p>
+              <h1 className="text-3xl font-bold tracking-tight md:text-4xl">Welcome back, {user?.name}</h1>
+              <p className="mt-3 text-sm text-slate-300 md:text-base">Keep your fleet and offers moving smoothly.</p>
             </div>
           </div>
         </div>
 
         {/* Admin Profile Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8 md:mb-12 backdrop-blur-sm">
+        <div className="mb-8 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
           <div className="flex items-center gap-6 md:gap-8">
-            <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-white text-3xl md:text-5xl shadow-lg transform hover:scale-105 transition duration-300">
+            <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-cyan-100 text-2xl text-cyan-700">
               <FaUser />
             </div>
             <div className="flex-1">
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">{user?.name}</h2>
               <p className="text-gray-600 text-sm md:text-base mb-2">{user?.email}</p>
-              <span className="inline-block bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-800 px-4 py-2 rounded-full text-xs md:text-sm font-semibold">
-                🛡️ Admin
+              <span className="inline-block rounded-md bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                Admin account
               </span>
             </div>
           </div>
@@ -119,44 +123,42 @@ export default function AdminDashboard() {
             icon={FaBox}
             label="Total Boards"
             value={stats.totalBoats}
-            trend={12}
             color="blue"
           />
           <AdminStatCard
             icon={FaTicketAlt}
             label="Active Discounts"
-            value="5"
-            trend={3}
-            color="purple"
+            value={stats.activeDiscounts}
+            color="orange"
           />
         </div>
 
         {/* Quick Actions Section */}
         <div className="mb-8 md:mb-12">
-          <h3 className="text-2xl md:text-3xl font-bold text-white mb-6">Quick Actions</h3>
+          <h3 className="mb-4 text-xl font-bold text-slate-950">Quick actions</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8">
             <Link href="/admin/boats">
-              <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl shadow-xl p-6 md:p-8 hover:shadow-2xl transition transform hover:-translate-y-1 duration-300 cursor-pointer group">
+              <div className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                 <div className="flex items-center gap-4 md:gap-6">
-                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl bg-white bg-opacity-20 flex items-center justify-center text-white text-3xl md:text-4xl group-hover:scale-110 transition transform duration-300">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-100 text-xl text-cyan-700">
                     <FaBox />
                   </div>
                   <div>
-                    <h3 className="text-xl md:text-2xl font-bold text-white">Manage Boards</h3>
-                    <p className="text-blue-100 text-sm md:text-base mt-1">Add, edit, or remove boards from inventory</p>
+                    <h3 className="text-base font-bold text-slate-950">Manage boats</h3>
+                    <p className="mt-1 text-sm text-slate-500">Update your fleet inventory</p>
                   </div>
                 </div>
               </div>
             </Link>
             <Link href="/admin/discounts">
-              <div className="bg-gradient-to-br from-purple-600 to-purple-700 rounded-2xl shadow-xl p-6 md:p-8 hover:shadow-2xl transition transform hover:-translate-y-1 duration-300 cursor-pointer group">
+              <div className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                 <div className="flex items-center gap-4 md:gap-6">
-                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl bg-white bg-opacity-20 flex items-center justify-center text-white text-3xl md:text-4xl group-hover:scale-110 transition transform duration-300">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-violet-100 text-xl text-violet-700">
                     <FaTicketAlt />
                   </div>
                   <div>
-                    <h3 className="text-xl md:text-2xl font-bold text-white">Manage Discounts</h3>
-                    <p className="text-purple-100 text-sm md:text-base mt-1">Create and manage promotional offers</p>
+                    <h3 className="text-base font-bold text-slate-950">Manage discounts</h3>
+                    <p className="mt-1 text-sm text-slate-500">Create and manage offers</p>
                   </div>
                 </div>
               </div>

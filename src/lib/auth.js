@@ -11,10 +11,8 @@ export function generateToken(userId) {
 export function verifyToken(token) {
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    console.log('✅ JWT verified successfully');
     return decoded;
   } catch (error) {
-    console.error('❌ JWT verification failed:', error.message, 'Secret set:', !!JWT_SECRET);
     return null;
   }
 }

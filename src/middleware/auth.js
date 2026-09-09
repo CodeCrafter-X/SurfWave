@@ -7,22 +7,14 @@ import { NextResponse } from 'next/server';
 export async function requireAuth(req) {
   try {
     const token = req.cookies.get('auth_token')?.value;
-    console.log('Auth middleware: looking for auth_token cookie');
-    console.log('Cookies available:', Array.from(req.cookies).map(c => c[0]));
-    
     if (!token) {
-      console.log('No auth_token found in cookies');
       return null;
     }
 
-    console.log('Found auth_token, verifying...');
     const decoded = verifyToken(token);
     if (!decoded || !decoded.userId) {
-      console.log('Token verification failed');
       return null;
     }
-
-    console.log('Token verified, userId:', decoded.userId);
     
     // Fetch full user from database
     await connectDB();

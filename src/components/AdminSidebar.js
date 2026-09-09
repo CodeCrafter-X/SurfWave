@@ -3,61 +3,53 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  FaTachometerAlt,
-  FaBox,
-  FaTicketAlt,
-  FaUser,
-  FaBars,
-  FaTimes,
-  FaSignOutAlt,
-} from 'react-icons/fa';
+import { FaTachometerAlt, FaBox, FaTicketAlt, FaUser, FaBars, FaTimes, FaArrowLeft } from 'react-icons/fa';
 
 export default function AdminSidebar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
-    { label: 'Dashboard', href: '/admin', icon: FaTachometerAlt },
+    { label: 'Dashboard', href: '/admin/dashboard', icon: FaTachometerAlt },
     { label: 'Manage Boats', href: '/admin/boats', icon: FaBox },
     { label: 'Discounts', href: '/admin/discounts', icon: FaTicketAlt },
     { label: 'Profile', href: '/admin/profile', icon: FaUser },
   ];
 
-  const isActive = (href) => pathname === href;
+  const isActive = (href) => pathname === href || (href === '/admin/dashboard' && pathname === '/admin');
 
   return (
     <>
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-5 left-4 z-40 md:hidden bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white p-3 rounded-lg shadow-lg transition transform hover:scale-110 active:scale-95"
+        aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
+        className="fixed left-4 top-4 z-40 rounded-md border border-slate-200 bg-white p-2.5 text-slate-700 shadow-sm transition hover:bg-slate-50 md:hidden"
       >
-        {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+        {isOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
       </button>
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-screen w-64 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white shadow-2xl transform transition-transform duration-300 z-30 md:translate-x-0 overflow-y-auto border-r border-gray-700 ${
+        className={`fixed left-0 top-0 z-30 h-screen w-64 transform overflow-y-auto border-r border-slate-200 bg-white text-slate-900 shadow-xl transition-transform duration-300 md:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Logo */}
-        <div className="p-4 md:p-6 border-b border-gray-700 sticky top-0 bg-gradient-to-b from-gray-900 to-gray-800">
-          <div className="flex items-center gap-3 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 p-3 rounded-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-            <div className="bg-white text-blue-600 p-2 rounded-lg font-bold text-lg shadow-md">
-              <span>🌊</span>
-            </div>
+        <div className="sticky top-0 border-b border-slate-200 bg-white p-5">
+          <div className="flex items-center gap-3">
+            <img src="/surf-img/surf-logo.svg" alt="SurfWave" className="h-10 w-10 object-contain" />
             <div>
-              <h1 className="font-bold text-lg md:text-xl">SurfWave</h1>
-              <p className="text-blue-200 text-xs">Admin Control</p>
+              <h1 className="text-lg font-bold tracking-tight text-slate-900">SurfWave</h1>
+              <p className="text-xs text-slate-500">Admin workspace</p>
             </div>
           </div>
         </div>
 
         {/* Navigation Menu */}
-        <nav className="flex-1 px-2 md:px-3 py-4 md:py-6">
-          <div className="space-y-1 md:space-y-2">
+        <nav className="px-3 py-6">
+          <p className="px-3 pb-3 text-[11px] font-semibold uppercase tracking-widest text-slate-400">Workspace</p>
+          <div className="space-y-1">
             {menuItems.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.href);
@@ -66,10 +58,10 @@ export default function AdminSidebar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-3 px-4 md:px-4 py-3 md:py-3 rounded-lg transition-all duration-200 text-sm md:text-base ${
+                  className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm transition-colors ${
                     active
-                      ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold shadow-lg scale-105 transform'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white transform hover:translate-x-1'
+                      ? 'bg-slate-900 font-semibold text-white'
+                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950'
                   }`}
                 >
                   <Icon size={20} />
@@ -81,12 +73,12 @@ export default function AdminSidebar() {
         </nav>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-700 p-3 md:p-4 bg-gradient-to-t from-gray-900 to-gray-800 sticky bottom-0">
+        <div className="sticky bottom-0 border-t border-slate-200 bg-white p-4">
           <Link
             href="/"
-            className="flex items-center gap-3 px-4 md:px-4 py-3 md:py-3 rounded-lg text-gray-300 hover:bg-gradient-to-r hover:from-red-600 hover:to-pink-600 hover:text-white transition-all duration-200 text-sm md:text-base font-medium transform hover:scale-105"
+            className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-950"
           >
-            <FaSignOutAlt size={20} />
+            <FaArrowLeft size={16} />
             <span>Exit Admin</span>
           </Link>
         </div>
@@ -95,7 +87,7 @@ export default function AdminSidebar() {
       {/* Overlay for mobile */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden"
+          className="fixed inset-0 z-20 bg-slate-950/30 md:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}

@@ -74,8 +74,8 @@ export default function Navigation() {
   return (
     <header className={`sticky top-0 z-50 transition-all duration-300 ${
       scrolled 
-        ? 'bg-[#031726]/95 backdrop-blur-md border-b border-white/10 shadow-xl py-3' 
-        : 'bg-[#031726]/85 backdrop-blur-md border-b border-white/5 py-4'
+        ? 'bg-[#031726] border-b border-white/10 py-3' 
+        : 'bg-[#031726] border-b border-white/10 py-4'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 sm:h-20">
@@ -101,7 +101,7 @@ export default function Navigation() {
             >
               Home
               {isActive('/') && (
-                <span className="absolute -bottom-1 left-0 w-full h-1 bg-[#00f5d4] rounded-full shadow-[0_0_10px_rgba(0,245,212,0.6)]"></span>
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-[#00f5d4]"></span>
               )}
             </Link>
 
@@ -115,7 +115,7 @@ export default function Navigation() {
             >
               Boards
               {isActive('/boats') && (
-                <span className="absolute -bottom-1 left-0 w-full h-1 bg-[#00f5d4] rounded-full shadow-[0_0_10px_rgba(0,245,212,0.6)]"></span>
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-[#00f5d4]"></span>
               )}
             </Link>
 
@@ -129,7 +129,7 @@ export default function Navigation() {
             >
               Contacts
               {isActive('/contact') && (
-                <span className="absolute -bottom-1 left-0 w-full h-1 bg-[#00f5d4] rounded-full shadow-[0_0_10px_rgba(0,245,212,0.6)]"></span>
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-[#00f5d4]"></span>
               )}
             </Link>
           </nav>
@@ -141,7 +141,7 @@ export default function Navigation() {
               href="https://wa.me/94727578276"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm md:text-base lg:text-lg font-extrabold text-[#25D366] hover:text-white border-2 border-[#25D366]/60 hover:bg-[#25D366] px-4 sm:px-5 py-2 sm:py-2.5 rounded-full transition-all duration-200 shadow-[0_0_15px_rgba(37,211,102,0.2)] hover:scale-105 active:scale-95"
+              className="flex items-center gap-2 text-sm font-semibold text-[#25D366] hover:text-white px-2 py-2 transition-colors"
             >
               <FaWhatsapp size={19} />
               <span>WhatsApp</span>
@@ -152,14 +152,14 @@ export default function Navigation() {
               <div className="flex items-center gap-2">
                 <Link
                   href="/admin/dashboard"
-                  className="bg-gradient-to-r from-[#00b4d8] to-[#00f5d4] text-[#031726] px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-extrabold text-sm md:text-base lg:text-lg transition hover:scale-105 active:scale-95 flex items-center gap-2 shadow-md"
+                  className="flex items-center gap-2 border-l border-white/15 px-4 py-2 text-sm font-semibold text-white transition-colors hover:text-[#00f5d4]"
                 >
                   <FaUser size={15} />
                   <span>Admin</span>
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-gray-400 hover:text-red-400 p-2 transition hover:scale-110"
+                  className="p-2 text-gray-400 transition-colors hover:text-red-400"
                   title="Logout"
                 >
                   <FaSignOutAlt size={18} />
@@ -203,7 +203,7 @@ export default function Navigation() {
                 onClick={closeMobileMenu}
                 className={`flex items-center gap-3.5 px-4 py-3.5 rounded-2xl font-extrabold text-lg sm:text-xl transition ${
                   isActive('/') 
-                    ? 'bg-gradient-to-r from-[#00b4d8]/20 to-[#00f5d4]/20 text-[#00f5d4] border border-[#00f5d4]/30' 
+                    ? 'border-l-2 border-[#00f5d4] bg-white/10 text-[#00f5d4]' 
                     : 'text-gray-100 hover:bg-white/5'
                 }`}
               >
@@ -216,7 +216,7 @@ export default function Navigation() {
                 onClick={closeMobileMenu}
                 className={`flex items-center gap-3.5 px-4 py-3.5 rounded-2xl font-extrabold text-lg sm:text-xl transition ${
                   isActive('/boats') 
-                    ? 'bg-gradient-to-r from-[#00b4d8]/20 to-[#00f5d4]/20 text-[#00f5d4] border border-[#00f5d4]/30' 
+                    ? 'border-l-2 border-[#00f5d4] bg-white/10 text-[#00f5d4]' 
                     : 'text-gray-100 hover:bg-white/5'
                 }`}
               >
@@ -229,7 +229,7 @@ export default function Navigation() {
                 onClick={closeMobileMenu}
                 className={`flex items-center gap-3.5 px-4 py-3.5 rounded-2xl font-extrabold text-lg sm:text-xl transition ${
                   isActive('/contact') 
-                    ? 'bg-gradient-to-r from-[#00b4d8]/20 to-[#00f5d4]/20 text-[#00f5d4] border border-[#00f5d4]/30' 
+                    ? 'border-l-2 border-[#00f5d4] bg-white/10 text-[#00f5d4]' 
                     : 'text-gray-100 hover:bg-white/5'
                 }`}
               >
@@ -243,7 +243,7 @@ export default function Navigation() {
                   href="https://wa.me/94727578276"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#20ba5a] text-white py-3.5 rounded-2xl font-extrabold text-base sm:text-lg shadow-[0_0_20px_rgba(37,211,102,0.3)] transition"
+                  className="flex items-center justify-center gap-2.5 border border-[#25D366]/70 py-3.5 text-base font-semibold text-[#25D366] transition hover:bg-[#25D366] hover:text-white"
                 >
                   <FaWhatsapp size={22} />
                   <span>WhatsApp Chat</span>
@@ -262,7 +262,7 @@ export default function Navigation() {
                       <Link
                         href="/admin/dashboard"
                         onClick={closeMobileMenu}
-                        className="w-full px-4 py-3.5 bg-gradient-to-r from-[#00b4d8] to-[#00f5d4] text-[#031726] rounded-2xl font-extrabold text-base sm:text-lg flex items-center justify-center gap-2 shadow-md"
+                        className="flex w-full items-center justify-center gap-2 border border-[#00f5d4] px-4 py-3.5 text-base font-semibold text-[#00f5d4] transition hover:bg-[#00f5d4] hover:text-[#031726]"
                       >
                         <FaUser size={18} />
                         <span>Admin Panel</span>
@@ -273,7 +273,7 @@ export default function Navigation() {
                         handleLogout();
                         closeMobileMenu();
                       }}
-                      className="w-full px-4 py-3.5 bg-red-500/20 text-red-300 border border-red-500/30 rounded-2xl font-extrabold text-base sm:text-lg flex items-center justify-center gap-2"
+                      className="flex w-full items-center justify-center gap-2 border border-red-400/50 px-4 py-3.5 text-base font-semibold text-red-300 transition hover:bg-red-400/10"
                     >
                       <FaSignOutAlt size={18} />
                       <span>Logout</span>
@@ -283,7 +283,7 @@ export default function Navigation() {
                   <Link 
                     href="/login" 
                     onClick={closeMobileMenu}
-                    className="w-full px-4 py-3.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-2xl font-extrabold text-base sm:text-lg flex items-center justify-center gap-2 transition"
+                    className="flex w-full items-center justify-center gap-2 border border-white/20 px-4 py-3.5 text-base font-semibold text-white transition hover:bg-white/10"
                   >
                     <FaSignInAlt size={18} />
                     <span>Sign In</span>
