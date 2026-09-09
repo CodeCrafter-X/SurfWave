@@ -43,7 +43,7 @@ export default function AdminBoatsPage() {
           setUser(data.user);
           fetchBoats();
         } else {
-          router.push('/dashboard');
+          router.push('/');
         }
       } else {
         router.push('/login');

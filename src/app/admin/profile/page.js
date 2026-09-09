@@ -35,7 +35,7 @@ export default function AdminProfilePage() {
             email: data.user.email,
           });
         } else {
-          router.push('/dashboard');
+          router.push('/');
         }
       } else {
         router.push('/login');
@@ -50,7 +50,7 @@ export default function AdminProfilePage() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await fetch(`/api/users/${user._id}`, {
+      const response = await fetch(`/api/users/${user.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

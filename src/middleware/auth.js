@@ -27,7 +27,7 @@ export async function requireAuth(req) {
     // Fetch full user from database
     await connectDB();
     const user = await User.findById(decoded.userId);
-    return user;
+    return user && user.role === 'admin' ? user : null;
   } catch (error) {
     console.error('Auth error:', error);
     return null;

@@ -32,6 +32,12 @@ async function seed() {
       console.log('Admin user already exists');
     }
 
+    // Buyer accounts are not part of this public catalogue workflow.
+    const removedBuyerUsers = await User.deleteMany({ role: { $ne: 'admin' } });
+    if (removedBuyerUsers.deletedCount > 0) {
+      console.log(`Removed ${removedBuyerUsers.deletedCount} legacy buyer account(s)`);
+    }
+
     // Sample boats data
     const boatSamples = [
       {

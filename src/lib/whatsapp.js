@@ -19,6 +19,14 @@ ${baseUrl}/boats/${boatId}
 Please provide payment options and delivery details.`;
 }
 
+export function generateInquiryMessage(boatTitle, boatId, type, price) {
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+  const action = type === 'rent' ? 'rent' : 'buy';
+  const priceText = type === 'rent' ? `$${price}/hour` : `$${price}`;
+
+  return `Hello, I am interested in this board.\n\nBoard: ${boatTitle}\nRequest: ${action}\nPrice: ${priceText}\n\n${baseUrl}/boats/${boatId}\n\nPlease confirm availability and next steps.`;
+}
+
 export function generateRentMessage(boatTitle, boatId, rentalDate, hours, quantity) {
   const formattedDate = new Date(rentalDate).toLocaleDateString('en-US', {
     year: 'numeric',

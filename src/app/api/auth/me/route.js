@@ -3,7 +3,7 @@ import { requireAuth, handleResponse, handleError } from '@/middleware/auth';
 export async function GET(request) {
   try {
     const authUser = await requireAuth(request);
-    if (!authUser || !authUser._id) {
+    if (!authUser || !authUser._id || authUser.role !== 'admin') {
       return handleError('Not authenticated - no user in auth result', 401);
     }
 

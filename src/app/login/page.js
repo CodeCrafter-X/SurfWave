@@ -34,11 +34,7 @@ export default function LoginPage() {
       if (response.ok) {
         // Delay redirect to ensure cookie is properly set
         await new Promise(resolve => setTimeout(resolve, 100));
-        if (data.user.role === 'admin') {
-          router.push('/admin/dashboard');
-        } else {
-          router.push('/dashboard');
-        }
+        router.push('/admin/dashboard');
       } else {
         setError(data.error || 'Login failed');
       }
@@ -117,6 +113,9 @@ export default function LoginPage() {
           </p>
           <Link href="/" className="text-teal-600 hover:text-teal-700 font-bold text-sm">
             ← Back to Home
+          </Link>
+          <Link href="/admin/register" className="block mt-4 text-gray-500 hover:text-teal-600 text-xs">
+            Create replacement admin account
           </Link>
         </div>
       </div>

@@ -30,7 +30,7 @@ export default function AdminBookingsPage() {
           setUser(data.user);
           fetchBookings();
         } else {
-          router.push('/dashboard');
+          router.push('/');
         }
       } else {
         router.push('/login');

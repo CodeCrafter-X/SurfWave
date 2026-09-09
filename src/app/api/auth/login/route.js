@@ -15,7 +15,7 @@ export async function POST(request) {
 
     // Find user and include password field
     const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
-    if (!user) {
+    if (!user || user.role !== 'admin') {
       return handleError('Invalid credentials', 401);
     }
 

@@ -30,30 +30,17 @@ export async function GET(request) {
       query.type = type;
     }
 
-    // Price filtering logic
-    if (type === 'rent' || !type) {
-      if (minPrice || maxPrice) {
-        query.pricePerHour = {};
-        if (minPrice) query.pricePerHour.$gte = parseFloat(minPrice);
-        if (maxPrice) query.pricePerHour.$lte = parseFloat(maxPrice);
-      }
-    }
+    if (minPrice || maxPrice) {
+      const priceRange = {};
+      if (minPrice) priceRange.$gte = parseFloat(minPrice);
+      if (maxPrice) priceRange.$lte = parseFloat(maxPrice);
 
-    if (type === 'sale' || !type) {
-      if (minPrice || maxPrice) {
-        if (query.price) {
-          // Handle mixed type query
-          query.$or = [
-            { type: 'sale', price: { $gte: minPrice ? parseFloat(minPrice) : 0, $lte: maxPrice ? parseFloat(maxPrice) : Infinity } },
-            { type: 'rent', pricePerHour: { $gte: minPrice ? parseFloat(minPrice) : 0, $lte: maxPrice ? parseFloat(maxPrice) : Infinity } },
-          ];
-          delete query.pricePerHour;
-          delete query.price;
-        } else if (query.type !== 'rent') {
-          query.price = {};
-          if (minPrice) query.price.$gte = parseFloat(minPrice);
-          if (maxPrice) query.price.$lte = parseFloat(maxPrice);
-        }
+      if (type === 'rent') {
+        query.pricePerHour = priceRange;
+      } else if (type === 'sale') {
+        query.price = priceRange;
+      } else {
+        query.$or = [{ price: priceRange }, { pricePerHour: priceRange }];
       }
     }
 

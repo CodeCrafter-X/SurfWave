@@ -4,21 +4,40 @@ export const dynamic = 'force-dynamic';
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { FaArrowRight, FaSearch, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { 
+  FaArrowRight, 
+  FaSearch, 
+  FaChevronLeft, 
+  FaChevronRight, 
+  FaWater, 
+  FaWhatsapp, 
+  FaStar, 
+  FaShieldAlt, 
+  FaBolt, 
+  FaCompass,
+  FaWind,
+  FaTemperatureHigh,
+  FaCheckCircle
+} from 'react-icons/fa';
 import BoatCard from '@/components/BoatCard';
 
 export default function Home() {
   const [featuredBoats, setFeaturedBoats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [reviewIndex, setReviewIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState('rent'); // 'rent' or 'sale' or 'all'
 
   useEffect(() => {
-    fetchFeaturedBoats();
-  }, []);
+    fetchFeaturedBoats(activeTab);
+  }, [activeTab]);
 
-  async function fetchFeaturedBoats() {
+  async function fetchFeaturedBoats(tab = 'rent') {
     try {
-      const response = await fetch('/api/boats?limit=6&type=rent');
+      setLoading(true);
+      const url = tab === 'all' 
+        ? '/api/boats?limit=6' 
+        : `/api/boats?limit=6&type=${tab}`;
+      const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
         setFeaturedBoats(data.boats);
@@ -30,495 +49,665 @@ export default function Home() {
     }
   }
 
+  const reviews = [
+    {
+      text: "The best surfboard rental experience in Arugam Bay! The board was in pristine condition, and the team gave incredible local tips on the morning point swell.",
+      name: "Sarah Rodriguez",
+      role: "Travel Surfer, Australia",
+      initials: "SR",
+      gradient: "from-[#00b4d8] to-[#00f5d4]"
+    },
+    {
+      text: "Bought my first custom 6'2 shortboard from SurfWave. The transaction was effortless on WhatsApp, and the quality surpassed my expectations. Pure wave bliss!",
+      name: "Michael Johnson",
+      role: "Intermediate Surfer, UK",
+      initials: "MJ",
+      gradient: "from-[#0077b6] to-[#00b4d8]"
+    },
+    {
+      text: "Rented boards for our whole family during our Pottuvil vacation. Flexible hours, top safety gear, and super warm hospitality. We'll be back next season!",
+      name: "Emily Watson",
+      role: "Family Surf Explorer, Germany",
+      initials: "EW",
+      gradient: "from-[#00f5d4] to-[#48cae4]"
+    },
+    {
+      text: "Sold my old twin-fin and upgraded to a performance fish through their trade-in program. Honest pricing, friendly advice, and zero hassle.",
+      name: "David Kumar",
+      role: "Local Charger, Sri Lanka",
+      initials: "DK",
+      gradient: "from-[#00b4d8] to-[#00f5d4]"
+    },
+    {
+      text: "Unbeatable beachfront convenience. You can literally book a high-end epoxy board on WhatsApp and be paddling out into Main Point in 10 minutes.",
+      name: "Jessica Lee",
+      role: "Frequent Renter, Singapore",
+      initials: "JL",
+      gradient: "from-[#0077b6] to-[#00f5d4]"
+    },
+    {
+      text: "High-grade board selection. They have everything from beginner foamies to razor-sharp performance boards. 10/10 recommend to all ocean lovers!",
+      name: "Alex Patel",
+      role: "Surf Enthusiast, India",
+      initials: "AP",
+      gradient: "from-[#48cae4] to-[#0077b6]"
+    }
+  ];
+
   return (
-    <div className="w-full">
-      {/* Hero Section */}
+    <div className="w-full bg-[#f4fbfd] text-[#082133] overflow-hidden">
+      
+      {/* ========================================================================= */}
+      {/* 1. HERO SECTION WITH ENERGETIC SEA VIBE & MULTI-LAYER ANIMATED WAVES     */}
+      {/* ========================================================================= */}
       <section 
-        className="text-white py-20 md:py-32 px-4 relative overflow-hidden"
+        className="relative min-h-[90vh] md:min-h-[95vh] flex flex-col justify-between pt-16 md:pt-24 pb-28 md:pb-36 px-4 overflow-hidden bg-cover bg-center bg-fixed"
         style={{
           backgroundImage: 'url(/surf-img/home-surf.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
         }}
       >
-        {/* Overlay for text readability */}
-        <div className="absolute inset-0 bg-black opacity-40"></div>
+        {/* Deep Ocean Liquid Mesh Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#031726]/85 via-[#031726]/70 to-[#031726]/90 backdrop-blur-[2px]"></div>
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 leading-tight px-2">
-              Dive into Your Next Adventure
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-blue-50 mb-3 md:mb-4 max-w-3xl mx-auto px-2">
-              Premium surfboard rentals and sales at Pottuvil Arugambe Beach
-            </p>
-            <p className="text-sm sm:text-base md:text-lg text-blue-100 mb-8 md:mb-12 max-w-2xl mx-auto px-2">
-              Experience the perfect wave of luxury, comfort, and unforgettable memories on the Indian Ocean
-            </p>
+        {/* Ambient Bioluminescent Radial Lights */}
+        <div className="absolute top-10 left-10 w-72 md:w-96 h-72 md:h-96 bg-[#00f5d4]/20 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
+        <div className="absolute bottom-20 right-10 w-80 md:w-[30rem] h-80 md:h-[30rem] bg-[#00b4d8]/25 rounded-full blur-3xl pointer-events-none animate-pulse-slow" style={{ animationDelay: '1.5s' }}></div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row justify-center gap-3 md:gap-4 mb-12 px-2">
-              <Link
-                href="/boats?type=rent"
-                className="bg-white hover:bg-gray-50 text-teal-600 font-bold py-3 md:py-4 px-6 md:px-8 rounded-full shadow-lg transition transform hover:scale-105 active:scale-95 text-sm md:text-base"
-              >
-                Rent a Surfboard
-              </Link>
-              <Link
-                href="/boats?type=sale"
-                className="bg-teal-700 hover:bg-teal-800 text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-full shadow-lg transition transform hover:scale-105 active:scale-95 border-2 border-white text-sm md:text-base"
-              >
-                Buy a Surfboard
-              </Link>
+        {/* Hero Content Container */}
+        <div className="max-w-7xl mx-auto w-full relative z-20 flex-grow flex flex-col justify-center items-center text-center px-4">
+          
+          {/* Live Surf Beacon Badge */}
+          <div className="inline-flex items-center gap-2.5 bg-[#06283d]/80 border border-[#00f5d4]/40 px-4 py-2 rounded-full mb-6 backdrop-blur-xl shadow-[0_0_25px_rgba(0,245,212,0.3)] animate-surf-bob">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00f5d4] opacity-80"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-[#00f5d4]"></span>
+            </span>
+            <span className="text-xs sm:text-sm font-bold tracking-wider text-[#e0fbfc] uppercase">
+              ⚡ Pottuvil Arugam Bay • Indian Ocean
+            </span>
+          </div>
+
+          {/* Dynamic Liquid Headline */}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[1.1] mb-6 max-w-5xl">
+            Ride the Rhythm of <br className="hidden sm:inline" />
+            <span className="ocean-gradient-text animate-sea-gradient">
+              The Indian Ocean
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-base sm:text-xl md:text-2xl text-[#e0fbfc]/90 font-medium mb-8 md:mb-10 max-w-3xl leading-relaxed">
+            Premium hand-selected surfboard rentals, expert advice, and vessel sales at Sri Lanka’s world-renowned right-hand point breaks.
+          </p>
+
+          {/* Energetic Dual CTA Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md sm:max-w-none mb-12">
+            <Link
+              href="/boats?type=rent"
+              className="w-full sm:w-auto shimmer-trigger bg-gradient-to-r from-[#00f5d4] via-[#00b4d8] to-[#0077b6] animate-sea-gradient text-[#031726] font-black text-base md:text-lg py-4 px-8 md:px-10 rounded-full shadow-[0_0_35px_rgba(0,245,212,0.5)] hover:shadow-[0_0_50px_rgba(0,245,212,0.8)] transform hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3"
+            >
+              <span>🏄</span>
+              <span>Rent a Surfboard</span>
+              <FaArrowRight className="text-sm" />
+            </Link>
+
+            <Link
+              href="/boats?type=sale"
+              className="w-full sm:w-auto glass-sea-card-dark text-[#e0fbfc] hover:text-white font-black text-base md:text-lg py-4 px-8 md:px-10 rounded-full border border-[#00f5d4]/40 hover:border-[#00f5d4] shadow-[0_0_25px_rgba(0,180,216,0.25)] hover:shadow-[0_0_40px_rgba(0,245,212,0.4)] transform hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              <span>⚡</span>
+              <span>Buy a Surfboard</span>
+            </Link>
+          </div>
+
+          {/* Floating Live Swell Glass Pill Bar */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 w-full max-w-4xl bg-[#06283d]/70 border border-[#00f5d4]/25 backdrop-blur-xl p-3 sm:p-4 rounded-3xl shadow-[0_15px_40px_rgba(0,0,0,0.5)]">
+            <div className="flex items-center gap-3 px-3 py-2 bg-white/5 rounded-2xl">
+              <div className="p-2.5 rounded-xl bg-[#00f5d4]/10 text-[#00f5d4]">
+                <FaWater size={18} />
+              </div>
+              <div className="text-left">
+                <p className="text-[11px] text-gray-400 font-medium">Point Break Swell</p>
+                <p className="text-sm sm:text-base font-black text-white">4 – 6 FT Clean</p>
+              </div>
             </div>
+
+            <div className="flex items-center gap-3 px-3 py-2 bg-white/5 rounded-2xl">
+              <div className="p-2.5 rounded-xl bg-[#00b4d8]/10 text-[#00b4d8]">
+                <FaTemperatureHigh size={18} />
+              </div>
+              <div className="text-left">
+                <p className="text-[11px] text-gray-400 font-medium">Water Temp</p>
+                <p className="text-sm sm:text-base font-black text-white">28°C Tropical</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 px-3 py-2 bg-white/5 rounded-2xl">
+              <div className="p-2.5 rounded-xl bg-[#48cae4]/10 text-[#48cae4]">
+                <FaWind size={18} />
+              </div>
+              <div className="text-left">
+                <p className="text-[11px] text-gray-400 font-medium">Wind Condition</p>
+                <p className="text-sm sm:text-base font-black text-white">8 kts Offshore</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 px-3 py-2 bg-white/5 rounded-2xl">
+              <div className="p-2.5 rounded-xl bg-[#ffd166]/10 text-[#ffd166]">
+                <FaBolt size={18} />
+              </div>
+              <div className="text-left">
+                <p className="text-[11px] text-gray-400 font-medium">Quiver Status</p>
+                <p className="text-sm sm:text-base font-black text-[#00f5d4]">50+ Boards Ready</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Multi-Tier Animated Organic Wave Dividers */}
+        <div className="ocean-waves-container">
+          {/* Back Wave Layer (Slow & Translucent) */}
+          <svg 
+            className="ocean-wave-layer animate-wave-slow text-[#0077b6]/30 fill-current" 
+            viewBox="0 0 1200 120" 
+            preserveAspectRatio="none"
+          >
+            <path d="M0,0 C150,90 350,-40 500,60 C650,160 900,10 1200,40 L1200,120 L0,120 Z"></path>
+          </svg>
+          {/* Middle Wave Layer */}
+          <svg 
+            className="ocean-wave-layer animate-wave-fast text-[#00b4d8]/40 fill-current -mt-10" 
+            viewBox="0 0 1200 120" 
+            preserveAspectRatio="none"
+          >
+            <path d="M0,0 C200,80 400,-20 600,70 C800,160 1000,20 1200,60 L1200,120 L0,120 Z"></path>
+          </svg>
+          {/* Front Solid Wave Layer Matching Next Section Background */}
+          <svg 
+            className="ocean-wave-layer text-[#031726] fill-current -mt-10" 
+            viewBox="0 0 1200 120" 
+            preserveAspectRatio="none"
+          >
+            <path d="M0,20 C180,90 380,10 580,75 C780,140 980,30 1200,80 L1200,120 L0,120 Z"></path>
+          </svg>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 2. STATS RIBBON (OCEANIC TRENCH WITH GLOWING COUNTERS)                   */}
+      {/* ========================================================================= */}
+      <section className="bg-[#031726] py-10 px-4 relative z-20 -mt-1">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            
+            <div className="p-4 rounded-2xl bg-white/5 border border-[#00f5d4]/20 hover:border-[#00f5d4]/60 transition-all hover:scale-105 duration-300">
+              <div className="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#00f5d4] to-[#00b4d8] mb-1">
+                50+
+              </div>
+              <p className="text-xs sm:text-sm font-bold text-[#e0fbfc] tracking-wide">Elite Handcrafted Boards</p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/5 border border-[#00f5d4]/20 hover:border-[#00f5d4]/60 transition-all hover:scale-105 duration-300">
+              <div className="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#00b4d8] to-[#48cae4] mb-1">
+                1,500+
+              </div>
+              <p className="text-xs sm:text-sm font-bold text-[#e0fbfc] tracking-wide">Thrilled Surfers Served</p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/5 border border-[#00f5d4]/20 hover:border-[#00f5d4]/60 transition-all hover:scale-105 duration-300">
+              <div className="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ffd166] to-[#ffb703] mb-1">
+                4.9 ★
+              </div>
+              <p className="text-xs sm:text-sm font-bold text-[#e0fbfc] tracking-wide">Top Arugam Bay Rating</p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/5 border border-[#00f5d4]/20 hover:border-[#00f5d4]/60 transition-all hover:scale-105 duration-300">
+              <div className="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ff6b6b] to-[#f72585] mb-1">
+                24/7
+              </div>
+              <p className="text-xs sm:text-sm font-bold text-[#e0fbfc] tracking-wide">WhatsApp Beach Concierge</p>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* Featured Boats Section */}
-      <section className="py-16 md:py-20 px-4 bg-white">
+      {/* ========================================================================= */}
+      {/* 3. FEATURED BOATS & SURF COLLECTION                                      */}
+      {/* ========================================================================= */}
+      <section className="py-20 md:py-28 px-4 relative bg-[#f4fbfd]">
         <div className="max-w-7xl mx-auto">
+          
+          {/* Section Header */}
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">Featured Collection</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-teal-500 to-blue-500 mx-auto"></div>
+            <div className="inline-flex items-center gap-2 text-xs font-black tracking-widest text-[#0077b6] uppercase bg-[#00b4d8]/15 px-4 py-1.5 rounded-full mb-3">
+              <FaWater size={12} className="text-[#00b4d8]" />
+              <span>The Quiver Collection</span>
+            </div>
+            
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#031726] tracking-tight mb-4">
+              Featured Boards & Craft
+            </h2>
+
+            <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base mb-8">
+              From responsive epoxy shortboards for Main Point barrels to high-buoyancy longboards for Baby Point glides.
+            </p>
+
+            {/* Quick Filter Pill Controls */}
+            <div className="inline-flex p-1.5 rounded-full bg-gray-200/80 backdrop-blur-md border border-gray-300">
+              <button
+                onClick={() => setActiveTab('rent')}
+                className={`px-5 py-2 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 ${
+                  activeTab === 'rent'
+                    ? 'bg-gradient-to-r from-[#0077b6] to-[#00b4d8] text-white shadow-md'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                🌊 For Rent
+              </button>
+              <button
+                onClick={() => setActiveTab('sale')}
+                className={`px-5 py-2 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 ${
+                  activeTab === 'sale'
+                    ? 'bg-gradient-to-r from-[#00b4d8] to-[#00f5d4] text-[#031726] shadow-md'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                ⚡ For Sale
+              </button>
+              <button
+                onClick={() => setActiveTab('all')}
+                className={`px-5 py-2 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 ${
+                  activeTab === 'all'
+                    ? 'bg-[#031726] text-white shadow-md'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                All Quiver
+              </button>
+            </div>
           </div>
 
+          {/* Cards Grid */}
           {loading ? (
-            <div className="text-center py-12">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-teal-200 border-t-teal-600"></div>
-              <p className="mt-4 text-gray-600 text-lg">Loading boards...</p>
+            <div className="text-center py-20">
+              <div className="relative inline-flex">
+                <div className="w-16 h-16 rounded-full border-4 border-[#00b4d8]/20 border-t-[#00f5d4] animate-spin"></div>
+                <div className="absolute inset-0 flex items-center justify-center text-xl">🏄</div>
+              </div>
+              <p className="mt-4 text-gray-500 font-bold tracking-wide">Summoning boards from the surf rack...</p>
             </div>
           ) : featuredBoats.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-14">
                 {featuredBoats.map((boat) => (
                   <BoatCard key={boat._id} boat={boat} />
                 ))}
               </div>
+
+              {/* View All Button */}
               <div className="text-center">
                 <Link
                   href="/boats"
-                  className="inline-block bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-bold py-3 md:py-4 px-8 md:px-10 rounded-full shadow-lg transition transform hover:scale-105 active:scale-95 text-sm md:text-base"
+                  className="inline-flex items-center gap-3 shimmer-trigger bg-gradient-to-r from-[#0077b6] via-[#00b4d8] to-[#00f5d4] animate-sea-gradient text-white hover:text-[#031726] font-black py-4 px-10 rounded-full shadow-[0_10px_30px_rgba(0,180,216,0.3)] hover:shadow-[0_15px_40px_rgba(0,245,212,0.5)] transform hover:scale-105 active:scale-95 transition-all text-sm sm:text-base"
                 >
-                  View All Boards
+                  <span>Explore Full Surf Inventory</span>
+                  <FaArrowRight />
                 </Link>
               </div>
             </>
           ) : (
-            <div className="text-center py-12 text-gray-600">
-              <p className="text-lg">No boats available at the moment.</p>
+            <div className="text-center py-16 glass-sea-card rounded-3xl max-w-lg mx-auto">
+              <div className="text-5xl mb-3">🌊</div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">No boards found right now</h3>
+              <p className="text-gray-500 text-sm mb-6">Check back in a moment or chat with us on WhatsApp to check offline stock.</p>
+              <a
+                href="https://wa.me/94727578276"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-full font-bold text-sm shadow-md"
+              >
+                <FaWhatsapp size={16} />
+                <span>Ask via WhatsApp</span>
+              </a>
             </div>
           )}
+
         </div>
       </section>
 
-      {/* About Us Section */}
+      {/* ========================================================================= */}
+      {/* 4. WHY SURFWAVE? (FROSTED GLASS OCEANIC FEATURE CARDS)                   */}
+      {/* ========================================================================= */}
+      <section className="py-20 md:py-28 px-4 bg-gradient-to-b from-[#f4fbfd] to-[#e0fbfc] relative">
+        <div className="max-w-7xl mx-auto">
+          
+          <div className="text-center mb-14 md:mb-20">
+            <div className="inline-flex items-center gap-2 text-xs font-black tracking-widest text-[#0077b6] uppercase bg-white px-4 py-1.5 rounded-full mb-3 shadow-sm border border-blue-100">
+              <FaShieldAlt size={12} className="text-[#00f5d4]" />
+              <span>The SurfWave Advantage</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#031726] tracking-tight">
+              Why Surfers Choose Us
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            {/* Card 1 */}
+            <div className="group glass-sea-card p-8 rounded-3xl transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,180,216,0.2)] hover:border-[#00f5d4]/60">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#0077b6] to-[#00f5d4] flex items-center justify-center text-3xl shadow-lg mb-6 group-hover:scale-110 transition-transform">
+                🏄
+              </div>
+              <h3 className="text-xl font-extrabold text-[#031726] mb-3">Premium Hand-Shaped Quiver</h3>
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                Meticulously waxed, ding-free boards tailored for every wave condition—from gentle rollers at Baby Point to hollow tubes at Peanut Farm.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div className="group glass-sea-card p-8 rounded-3xl transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,180,216,0.2)] hover:border-[#00f5d4]/60">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#00b4d8] to-[#48cae4] flex items-center justify-center text-3xl shadow-lg mb-6 group-hover:scale-110 transition-transform">
+                💎
+              </div>
+              <h3 className="text-xl font-extrabold text-[#031726] mb-3">Transparent Island Pricing</h3>
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                Clear hourly and daily rental rates with zero hidden beach surcharges. Multi-day discounts and try-before-you-buy programs available.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="group glass-sea-card p-8 rounded-3xl transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,180,216,0.2)] hover:border-[#00f5d4]/60">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#25D366] to-[#00f5d4] flex items-center justify-center text-3xl shadow-lg mb-6 group-hover:scale-110 transition-transform">
+                ⚡
+              </div>
+              <h3 className="text-xl font-extrabold text-[#031726] mb-3">Instant WhatsApp Lock</h3>
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                Skip tedious paperwork. Connect directly with our beach crew on WhatsApp, lock in your board, and pick it up beachside in minutes.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 5. ABOUT US (OCEAN PANORAMA WITH GLASS EMBED)                           */}
+      {/* ========================================================================= */}
       <section 
-        className="py-16 md:py-20 px-4 bg-white relative"
+        className="py-24 md:py-32 px-4 relative bg-cover bg-center bg-fixed"
         style={{
           backgroundImage: 'url(/surf-img/about-surf.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
         }}
       >
-        {/* Overlay for entire section */}
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="flex justify-center items-center">
-            {/* Text Content Card */}
-            <div className="w-full md:w-3/4 lg:w-2/3 p-6 md:p-10 lg:p-12 rounded-2xl text-center">
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">About SurfWave</h2>
-              <div className="w-20 h-1 bg-gradient-to-r from-teal-400 to-blue-400 mb-8 mx-auto"></div>
-              
-              <p className="text-base md:text-lg text-white mb-6 leading-relaxed">
-                Welcome to SurfWave, your premier destination for unforgettable ocean adventures at Pottuvil Arugambe Beach. With over a decade of experience in the boating industry, we pride ourselves on delivering exceptional service and premium vessels.
-              </p>
-              
-              <p className="text-base md:text-lg text-white mb-6 leading-relaxed">
-                Our passion for the ocean drives us to offer the finest surfboard rental and sales experiences. Whether you're seeking an exhilarating ride, exploring new breaks, or looking to purchase your dream surfboard, SurfWave has the perfect solution for you.
-              </p>
+        <div className="absolute inset-0 bg-[#031726]/85 backdrop-blur-[3px]"></div>
 
-              <p className="text-base md:text-lg text-white mb-8 leading-relaxed">
-                With a fleet of meticulously maintained boats, experienced crew members, and world-class customer service, we ensure every moment on the water is safe, comfortable, and absolutely unforgettable.
-              </p>
+        <div className="max-w-5xl mx-auto relative z-10">
+          <div className="glass-sea-card-dark p-8 sm:p-12 md:p-16 rounded-3xl text-center shadow-[0_25px_60px_rgba(0,0,0,0.6)]">
+            
+            <div className="inline-flex items-center gap-2 bg-[#00f5d4]/10 border border-[#00f5d4]/30 px-4 py-1.5 rounded-full text-xs font-bold text-[#00f5d4] uppercase mb-4">
+              <span>🌊 The Story of SurfWave</span>
+            </div>
 
+            <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-6">
+              Born from the Waves of Arugam Bay
+            </h2>
+
+            <div className="w-24 h-1 bg-gradient-to-r from-[#00f5d4] via-[#00b4d8] to-[#0077b6] mx-auto mb-8 rounded-full"></div>
+
+            <p className="text-base sm:text-lg text-[#e0fbfc]/90 leading-relaxed mb-6">
+              SurfWave is situated right at the heartbeat of Pottuvil Arugambe Beach, home to some of the world’s most consistent and beloved right-hand surf point breaks. With over a decade of riding these swells, our mission is simple: get you on the right board with the right fin setup to turn every paddle-out into pure joy.
+            </p>
+
+            <p className="text-base sm:text-lg text-[#e0fbfc]/90 leading-relaxed mb-10">
+              Whether you are catching your very first green wave on a 9-foot soft-top or carving up high-performance sections at Whiskey Point, we back you with premium equipment, safety leashes, and honest wave wisdom.
+            </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/contact"
-                className="inline-block bg-gradient-to-r from-teal-400 to-blue-400 hover:from-teal-500 hover:to-blue-500 text-white font-bold py-3 md:py-4 px-8 md:px-10 rounded-full shadow-lg transition transform hover:scale-105 active:scale-95 text-sm md:text-base"
+                className="shimmer-trigger bg-gradient-to-r from-[#00f5d4] to-[#00b4d8] text-[#031726] font-extrabold py-3.5 px-8 rounded-full shadow-[0_0_25px_rgba(0,245,212,0.4)] hover:shadow-[0_0_40px_rgba(0,245,212,0.6)] transition transform hover:scale-105 active:scale-95 text-sm sm:text-base"
               >
-                Get in Touch
+                Visit Our Beach Station
               </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section className="py-16 md:py-20 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 text-center mb-12 md:mb-16">Why SurfWave?</h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300">
-              <div className="text-4xl md:text-5xl mb-4 md:mb-6">🏄</div>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">Premium Collection</h3>
-              <p className="text-gray-600 text-sm md:text-lg">
-                Hand-picked quality surfboards for every skill level—from beginner-friendly to professional-grade
-              </p>
-            </div>
-
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300">
-              <div className="text-4xl md:text-5xl mb-4 md:mb-6">💎</div>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">Best Value</h3>
-              <p className="text-gray-600 text-sm md:text-lg">
-                Competitive pricing with exclusive discounts and flexible rental options year-round
-              </p>
-            </div>
-
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300">
-              <div className="text-4xl md:text-5xl mb-4 md:mb-6">⚡</div>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">Quick Booking</h3>
-              <p className="text-gray-600 text-sm md:text-lg">
-                Secure instant bookings with professional support and hassle-free transactions
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="bg-gradient-to-r from-black to-blue-900 text-white py-12 md:py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
-            <div>
-              <div className="text-3xl md:text-4xl font-bold mb-2">50+</div>
-              <p className="text-blue-100 text-xs md:text-lg">Premium Surfboards</p>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold mb-2">1000+</div>
-              <p className="text-blue-100 text-xs md:text-lg">Happy Customers</p>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold mb-2">4.9★</div>
-              <p className="text-blue-100 text-xs md:text-lg">Top Rated</p>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold mb-2">24/7</div>
-              <p className="text-blue-100 text-xs md:text-lg">Support</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 md:py-20 px-4 bg-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">Ready to Catch the Perfect Wave?</h2>
-          <p className="text-base md:text-xl text-gray-600 mb-8 md:mb-10">
-            Start your surfing adventure today. Browse our collection and find your perfect board
-          </p>
-          <Link
-            href="/boats"
-            className="inline-block bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-bold py-3 md:py-4 px-8 md:px-10 rounded-full shadow-lg transition transform hover:scale-105 active:scale-95 text-sm md:text-lg"
-          >
-            Explore Now
-          </Link>
-        </div>
-      </section>
-
-      {/* Customer Reviews Section */}
-      <section className="py-16 md:py-20 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">What Our Customers Say</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-teal-500 to-blue-500 mx-auto"></div>
-          </div>
-
-          <div className="relative">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {reviewIndex === 0 && (
-            <>
-            {/* Review 1 */}
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300 animate-slide-left">
-              <div className="flex items-center mb-4">
-                <div className="text-yellow-400 text-lg">★★★★★</div>
-                <span className="ml-2 text-gray-600 text-xs md:text-sm">(5/5)</span>
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed text-sm md:text-base">
-                "Amazing quality surfboards and excellent service! Found the perfect board for my skill level. The staff really knows their stuff!"
-              </p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-teal-400 to-blue-400 flex items-center justify-center text-white font-bold text-lg">
-                  SR
-                </div>
-                <div className="ml-4">
-                  <p className="font-bold text-gray-900 text-sm md:text-base">Sarah Rodriguez</p>
-                  <p className="text-gray-600 text-xs md:text-sm">Surfer</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Review 2 */}
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300 animate-slide-left" style={{animationDelay: '0.1s'}}>
-              <div className="flex items-center mb-4">
-                <div className="text-yellow-400 text-lg">★★★★★</div>
-                <span className="ml-2 text-gray-600 text-xs md:text-sm">(5/5)</span>
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed text-sm md:text-base">
-                "Great selection of boats and excellent customer service. The booking process was smooth, and everything was organized perfectly. Highly recommended!"
-              </p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 flex items-center justify-center text-white font-bold text-lg">
-                  MJ
-                </div>
-                <div className="ml-4">
-                  <p className="font-bold text-gray-900 text-sm md:text-base">Michael Johnson</p>
-                  <p className="text-gray-600 text-xs md:text-sm">Adventure Seeker</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Review 3 */}
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300 animate-slide-left" style={{animationDelay: '0.2s'}}>
-              <div className="flex items-center mb-4">
-                <div className="text-yellow-400 text-lg">★★★★★</div>
-                <span className="ml-2 text-gray-600 text-xs md:text-sm">(5/5)</span>
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed text-sm md:text-base">
-                "Great selection of boards for all skill levels. I rented a few times before buying one. The rental program is perfect for trying before you buy!"
-              </p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-400 to-teal-400 flex items-center justify-center text-white font-bold text-lg">
-                  EW
-                </div>
-                <div className="ml-4">
-                  <p className="font-bold text-gray-900 text-sm md:text-base">Emily Watson</p>
-                  <p className="text-gray-600 text-xs md:text-sm">Beginner Surfer</p>
-                </div>
-              </div>
-            </div>
-            </>
-            )}
-
-            {reviewIndex === 1 && (
-            <>
-            {/* Review 4 */}
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300 animate-slide-left">
-              <div className="flex items-center mb-4">
-                <div className="text-yellow-400 text-lg">★★★★★</div>
-                <span className="ml-2 text-gray-600 text-xs md:text-sm">(5/5)</span>
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed text-sm md:text-base">
-                "Sold my old boards through SurfWave and they made the process simple. Honest pricing and quick handling. Highly recommend!"
-              </p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-teal-500 to-blue-500 flex items-center justify-center text-white font-bold text-lg">
-                  DK
-                </div>
-                <div className="ml-4">
-                  <p className="font-bold text-gray-900 text-sm md:text-base">David Kumar</p>
-                  <p className="text-gray-600 text-xs md:text-sm">Board Seller</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Review 5 */}
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300 animate-slide-left" style={{animationDelay: '0.1s'}}>
-              <div className="flex items-center mb-4">
-                <div className="text-yellow-400 text-lg">★★★★★</div>
-                <span className="ml-2 text-gray-600 text-xs md:text-sm">(5/5)</span>
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed text-sm md:text-base">
-                "Best surfboard rental service in the area! All boards are well-maintained, and prices are fair. I rent every weekend!"
-              </p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-lg">
-                  JL
-                </div>
-                <div className="ml-4">
-                  <p className="font-bold text-gray-900 text-sm md:text-base">Jessica Lee</p>
-                  <p className="text-gray-600 text-xs md:text-sm">Frequent Renter</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Review 6 */}
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-300 animate-slide-left" style={{animationDelay: '0.2s'}}>
-              <div className="flex items-center mb-4">
-                <div className="text-yellow-400 text-lg">★★★★★</div>
-                <span className="ml-2 text-gray-600 text-xs md:text-sm">(5/5)</span>
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed text-sm md:text-base">
-                "Exceptional selection and customer service! Got expert advice on board selection. Really helped me improve my surfing!"
-              </p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 flex items-center justify-center text-white font-bold text-lg">
-                  AP
-                </div>
-                <div className="ml-4">
-                  <p className="font-bold text-gray-900 text-sm md:text-base">Alex Patel</p>
-                  <p className="text-gray-600 text-xs md:text-sm">Intermediate Surfer</p>
-                </div>
-              </div>
-            </div>
-            </>
-            )}
-            </div>
-
-            {/* Navigation Buttons - Mobile Optimized */}
-            <div className="flex justify-between items-center mt-8 md:mt-12 px-2">
-              <button
-                onClick={() => setReviewIndex(reviewIndex === 0 ? 1 : 0)}
-                className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white p-2 md:p-3 rounded-full shadow-lg transition transform hover:scale-110 active:scale-95"
-                aria-label="Previous reviews"
-              >
-                <FaChevronLeft size={20} className="md:w-6 md:h-6" />
-              </button>
               
-              {/* Dot Indicators */}
-              <div className="flex gap-2 justify-center flex-1 mx-4">
-                <button
-                  onClick={() => setReviewIndex(0)}
-                  className={`h-3 rounded-full transition-all duration-300 ${reviewIndex === 0 ? 'bg-teal-600 w-8' : 'bg-gray-300 w-3 hover:bg-gray-400'}`}
-                  aria-label="Reviews 1-3"
-                ></button>
-                <button
-                  onClick={() => setReviewIndex(1)}
-                  className={`h-3 rounded-full transition-all duration-300 ${reviewIndex === 1 ? 'bg-blue-600 w-8' : 'bg-gray-300 w-3 hover:bg-gray-400'}`}
-                  aria-label="Reviews 4-6"
-                ></button>
-              </div>
-              
-              <button
-                onClick={() => setReviewIndex(reviewIndex === 0 ? 1 : 0)}
-                className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white p-2 md:p-3 rounded-full shadow-lg transition transform hover:scale-110 active:scale-95"
-                aria-label="Next reviews"
+              <a
+                href="https://wa.me/94727578276"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3.5 px-8 rounded-full transition transform hover:scale-105 active:scale-95 text-sm sm:text-base flex items-center gap-2"
               >
-                <FaChevronRight size={20} className="md:w-6 md:h-6" />
-              </button>
+                <FaWhatsapp className="text-[#25D366]" />
+                <span>Message Ishan on WhatsApp</span>
+              </a>
             </div>
+
           </div>
         </div>
       </section>
 
-      {/* How to Buy/Rent Section */}
-      <section className="py-16 md:py-20 px-4 bg-white">
+      {/* ========================================================================= */}
+      {/* 6. HOW IT WORKS (CONNECTING WAVE SURGE FLOW)                              */}
+      {/* ========================================================================= */}
+      <section className="py-20 md:py-28 px-4 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 animate-fade-down">How It Works</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-teal-500 to-blue-500 mx-auto animate-fade-up"></div>
-            <p className="text-gray-600 mt-4 text-sm md:text-lg animate-fade-up" style={{animationDelay: '0.2s'}}>Simple steps to get your perfect surfboard experience</p>
+          
+          <div className="text-center mb-16 md:mb-20">
+            <div className="inline-flex items-center gap-2 text-xs font-black tracking-widest text-[#0077b6] uppercase bg-blue-50 px-4 py-1.5 rounded-full mb-3 border border-blue-100">
+              <FaCompass size={12} className="text-[#00b4d8]" />
+              <span>4 Simple Steps</span>
+            </div>
+            
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#031726] tracking-tight mb-4">
+              How to Rent or Buy
+            </h2>
+            
+            <p className="text-gray-600 max-w-xl mx-auto text-sm sm:text-base">
+              Get from your phone screen straight into the lineup in four seamless steps.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative">
-            {/* Animated connecting line - Desktop only */}
-            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 transform -translate-y-1/2">
-              <div className="absolute inset-0 bg-gradient-to-r from-teal-400 via-blue-400 to-cyan-400 rounded-full animate-pulse-slow opacity-30"></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-teal-500 via-blue-500 to-cyan-500 rounded-full" style={{
-                backgroundSize: '200% 100%',
-                animation: 'flow-line 3s linear infinite'
-              }}></div>
-            </div>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+            
             {/* Step 1 */}
-            <div className="relative group animate-fade-up z-10" style={{animationDelay: '0s'}}>
-              <div className="bg-gradient-to-br from-teal-100 to-cyan-100 p-8 rounded-2xl text-center hover:shadow-2xl transition transform hover:-translate-y-2 duration-300 min-h-56 flex flex-col justify-between group-hover:from-teal-50 group-hover:to-cyan-50">
-                <div>
-                  <div className="w-16 h-16 bg-gradient-to-r from-teal-500 to-blue-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-125 transition transform duration-300">
-                    1
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">Browse Selection</h3>
-                  <p className="text-gray-700 text-sm md:text-base leading-relaxed">
-                    Explore our collection of premium surfboards. Use filters to find exactly what you're looking for.
-                  </p>
-                </div>
+            <div className="glass-sea-card p-6 rounded-3xl text-center relative z-10 transition hover:-translate-y-2 duration-300">
+              <div className="w-14 h-14 mx-auto mb-5 rounded-2xl bg-gradient-to-tr from-[#0077b6] to-[#00b4d8] text-white font-black text-xl flex items-center justify-center shadow-lg">
+                1
               </div>
-              <div className="hidden lg:block absolute -right-4 top-1/2 transform translate-x-full -translate-y-1/2 z-20">
-                <div className="text-4xl group-hover:text-teal-600 transition-colors duration-300 animate-bounce" style={{animationDelay: '0s'}}>→</div>
-              </div>
+              <h3 className="text-lg font-bold text-[#031726] mb-2">Select Your Board</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Filter by rental, purchase, or board type to find your ideal match and volume.
+              </p>
             </div>
 
             {/* Step 2 */}
-            <div className="relative group animate-fade-up z-10" style={{animationDelay: '0.15s'}}>
-              <div className="bg-gradient-to-br from-blue-100 to-cyan-100 p-8 rounded-2xl text-center hover:shadow-2xl transition transform hover:-translate-y-2 duration-300 min-h-56 flex flex-col justify-between group-hover:from-blue-50 group-hover:to-cyan-50">
-                <div>
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-125 transition transform duration-300">
-                    2
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">Check Details</h3>
-                  <p className="text-gray-700 text-sm md:text-base leading-relaxed">
-                    View complete specifications, images, pricing, and customer reviews for each board.
-                  </p>
-                </div>
+            <div className="glass-sea-card p-6 rounded-3xl text-center relative z-10 transition hover:-translate-y-2 duration-300">
+              <div className="w-14 h-14 mx-auto mb-5 rounded-2xl bg-gradient-to-tr from-[#00b4d8] to-[#00f5d4] text-[#031726] font-black text-xl flex items-center justify-center shadow-lg">
+                2
               </div>
-              <div className="hidden lg:block absolute -right-4 top-1/2 transform translate-x-full -translate-y-1/2 z-20">
-                <div className="text-4xl group-hover:text-blue-600 transition-colors duration-300 animate-bounce" style={{animationDelay: '0.3s'}}>→</div>
-              </div>
+              <h3 className="text-lg font-bold text-[#031726] mb-2">Check Specifications</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Review dimensions, fin setups, condition photos, and rental duration options.
+              </p>
             </div>
 
             {/* Step 3 */}
-            <div className="relative group animate-fade-up z-10" style={{animationDelay: '0.3s'}}>
-              <div className="bg-gradient-to-br from-cyan-100 to-blue-100 p-8 rounded-2xl text-center hover:shadow-2xl transition transform hover:-translate-y-2 duration-300 min-h-56 flex flex-col justify-between group-hover:from-cyan-50 group-hover:to-blue-50">
-                <div>
-                  <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-125 transition transform duration-300">
-                    3
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">Connect via WhatsApp</h3>
-                  <p className="text-gray-700 text-sm md:text-base leading-relaxed">
-                    Click the WhatsApp button and instantly connect with our team for booking confirmation.
-                  </p>
-                </div>
+            <div className="glass-sea-card p-6 rounded-3xl text-center relative z-10 transition hover:-translate-y-2 duration-300">
+              <div className="w-14 h-14 mx-auto mb-5 rounded-2xl bg-gradient-to-tr from-[#25D366] to-[#00f5d4] text-[#031726] font-black text-xl flex items-center justify-center shadow-lg">
+                3
               </div>
-              <div className="hidden lg:block absolute -right-4 top-1/2 transform translate-x-full -translate-y-1/2 z-20">
-                <div className="text-4xl group-hover:text-cyan-600 transition-colors duration-300 animate-bounce" style={{animationDelay: '0.6s'}}>→</div>
-              </div>
+              <h3 className="text-lg font-bold text-[#031726] mb-2">Confirm on WhatsApp</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                One click sends a pre-filled booking inquiry straight to our local team.
+              </p>
             </div>
 
             {/* Step 4 */}
-            <div className="relative group animate-fade-up z-10" style={{animationDelay: '0.45s'}}>
-              <div className="bg-gradient-to-br from-teal-100 to-green-100 p-8 rounded-2xl text-center hover:shadow-2xl transition transform hover:-translate-y-2 duration-300 min-h-56 flex flex-col justify-between group-hover:from-teal-50 group-hover:to-green-50">
-                <div>
-                  <div className="w-16 h-16 bg-gradient-to-r from-teal-500 to-green-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-lg group-hover:scale-125 transition transform duration-300">
-                    ✓
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">Start Your Adventure</h3>
-                  <p className="text-gray-700 text-sm md:text-base leading-relaxed">
-                    Complete the booking and enjoy your new surfboard. Ride the perfect wave!
-                  </p>
-                </div>
+            <div className="glass-sea-card p-6 rounded-3xl text-center relative z-10 transition hover:-translate-y-2 duration-300">
+              <div className="w-14 h-14 mx-auto mb-5 rounded-2xl bg-gradient-to-tr from-[#00f5d4] to-[#ffd166] text-[#031726] font-black text-xl flex items-center justify-center shadow-lg">
+                4
               </div>
+              <h3 className="text-lg font-bold text-[#031726] mb-2">Paddle Out & Enjoy</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Grab your board waxed and ready at our station and score unforgettable waves!
+              </p>
+            </div>
+
+          </div>
+
+          {/* Pro Tips Banner */}
+          <div className="mt-12 bg-gradient-to-r from-[#031726] to-[#06283d] text-white p-6 sm:p-8 rounded-3xl border border-[#00f5d4]/25 shadow-xl">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div>
+                <h4 className="text-lg sm:text-xl font-bold text-[#00f5d4] mb-2 flex items-center gap-2">
+                  <span>💡 Local Surfer Pro Tip</span>
+                </h4>
+                <p className="text-gray-300 text-sm sm:text-base leading-relaxed max-w-2xl">
+                  Dawn patrol (6:00 AM – 9:00 AM) brings glassy offshore winds and peak tide conditions at Main Point. Reserve your board the evening before on WhatsApp to hit the lineup first!
+                </p>
+              </div>
+              <a
+                href="https://wa.me/94727578276?text=Hi%20SurfWave!%20I%20want%20to%20reserve%20a%20board%20for%20tomorrow%20morning."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shimmer-trigger bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-extrabold px-6 py-3 rounded-full text-sm shadow-md whitespace-nowrap flex items-center gap-2 hover:scale-105 transition"
+              >
+                <FaWhatsapp size={16} />
+                <span>Reserve Morning Board</span>
+              </a>
             </div>
           </div>
 
-          {/* Mobile Steps Info */}
-          <div className="mt-12 md:mt-16 bg-gradient-to-r from-teal-50 to-blue-50 p-6 md:p-8 rounded-2xl border-2 border-teal-200">
-            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-              💡 Pro Tips
-            </h3>
-            <ul className="space-y-3 text-gray-700 text-sm md:text-base">
-              <li className="flex items-start gap-3">
-                <span className="text-teal-600 font-bold text-lg">•</span>
-                <span><strong>For Rentals:</strong> Select your desired date and duration when sending your WhatsApp message</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-teal-600 font-bold text-lg">•</span>
-                <span><strong>For Purchases:</strong> Ask about bulk discounts or payment plans if buying multiple boards</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-teal-600 font-bold text-lg">•</span>
-                <span><strong>Quick Booking:</strong> WhatsApp response within 30 minutes during business hours</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-teal-600 font-bold text-lg">•</span>
-                <span><strong>Free Delivery:</strong> Available for purchases above $500 in the local area</span>
-              </li>
-            </ul>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 7. CUSTOMER REVIEWS (OCEAN CAROUSEL)                                      */}
+      {/* ========================================================================= */}
+      <section className="py-20 md:py-28 px-4 bg-[#f4fbfd]">
+        <div className="max-w-7xl mx-auto">
+          
+          <div className="text-center mb-14 md:mb-18">
+            <div className="inline-flex items-center gap-2 text-xs font-black tracking-widest text-[#0077b6] uppercase bg-[#00b4d8]/15 px-4 py-1.5 rounded-full mb-3">
+              <FaStar size={12} className="text-[#ffd166]" />
+              <span>Surfer Testimonials</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#031726] tracking-tight mb-3">
+              What The Ocean Community Says
+            </h2>
+            <p className="text-gray-600 text-sm sm:text-base">Real experiences from travelers and local rippers alike.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            {reviews.slice(reviewIndex * 3, reviewIndex * 3 + 3).map((rev, idx) => (
+              <div 
+                key={idx}
+                className="glass-sea-card p-6 sm:p-8 rounded-3xl flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,180,216,0.18)]"
+              >
+                <div>
+                  <div className="flex items-center gap-1 text-[#ffd166] text-sm mb-4">
+                    <FaStar /><FaStar /><FaStar /><FaStar /><FaStar />
+                    <span className="text-gray-500 text-xs ml-1 font-bold">(5.0)</span>
+                  </div>
+                  <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-6 italic">
+                    "{rev.text}"
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
+                  <div className={`w-11 h-11 rounded-full bg-gradient-to-r ${rev.gradient} flex items-center justify-center text-white font-extrabold text-sm shadow-md`}>
+                    {rev.initials}
+                  </div>
+                  <div>
+                    <h4 className="font-extrabold text-[#031726] text-sm">{rev.name}</h4>
+                    <p className="text-xs text-gray-500">{rev.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Carousel Controls */}
+          <div className="flex items-center justify-center gap-4">
+            <button
+              onClick={() => setReviewIndex(reviewIndex === 0 ? 1 : 0)}
+              className="p-3 rounded-full bg-white border border-gray-200 text-[#031726] hover:bg-[#00f5d4] hover:border-[#00f5d4] transition shadow-md hover:scale-110 active:scale-95"
+              aria-label="Previous Reviews"
+            >
+              <FaChevronLeft size={16} />
+            </button>
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => setReviewIndex(0)}
+                className={`h-2.5 rounded-full transition-all duration-300 ${
+                  reviewIndex === 0 ? 'w-8 bg-[#0077b6]' : 'w-2.5 bg-gray-300'
+                }`}
+                aria-label="Slide 1"
+              ></button>
+              <button
+                onClick={() => setReviewIndex(1)}
+                className={`h-2.5 rounded-full transition-all duration-300 ${
+                  reviewIndex === 1 ? 'w-8 bg-[#0077b6]' : 'w-2.5 bg-gray-300'
+                }`}
+                aria-label="Slide 2"
+              ></button>
+            </div>
+
+            <button
+              onClick={() => setReviewIndex(reviewIndex === 0 ? 1 : 0)}
+              className="p-3 rounded-full bg-white border border-gray-200 text-[#031726] hover:bg-[#00f5d4] hover:border-[#00f5d4] transition shadow-md hover:scale-110 active:scale-95"
+              aria-label="Next Reviews"
+            >
+              <FaChevronRight size={16} />
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 8. HIGH-IMPACT FINAL TIDAL CTA                                            */}
+      {/* ========================================================================= */}
+      <section className="py-20 md:py-28 px-4 bg-gradient-to-r from-[#031726] via-[#06283d] to-[#031726] text-white relative overflow-hidden">
+        
+        {/* Glowing Caustic Light Spotlights */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[20rem] bg-[#00f5d4]/15 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <span className="text-4xl sm:text-5xl mb-4 inline-block animate-surf-bob">🏄‍♂️</span>
+          
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight mb-6">
+            Ready to Catch Your Perfect Wave?
+          </h2>
+
+          <p className="text-base sm:text-xl text-[#e0fbfc]/80 mb-10 max-w-2xl mx-auto leading-relaxed">
+            The Indian Ocean is firing. Rent your board today or pick up your dream surfboard with instant local pickup at Pottuvil Arugambe Point.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/boats"
+              className="w-full sm:w-auto shimmer-trigger bg-gradient-to-r from-[#00f5d4] via-[#00b4d8] to-[#0077b6] text-[#031726] font-black text-base md:text-lg py-4 px-10 rounded-full shadow-[0_0_35px_rgba(0,245,212,0.5)] hover:shadow-[0_0_50px_rgba(0,245,212,0.8)] transform hover:scale-105 active:scale-95 transition-all"
+            >
+              Browse Quiver Now
+            </Link>
+
+            <a
+              href="https://wa.me/94727578276"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto bg-[#25D366] hover:bg-[#1ebd59] text-white font-black text-base md:text-lg py-4 px-8 rounded-full shadow-[0_0_25px_rgba(37,211,102,0.4)] transform hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
+            >
+              <FaWhatsapp size={20} />
+              <span>Instant WhatsApp Desk</span>
+            </a>
           </div>
         </div>
       </section>
+
     </div>
   );
 }

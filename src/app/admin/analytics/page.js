@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminSidebar from '@/components/AdminSidebar';
 import AdminStatCard from '@/components/AdminStatCard';
-import { FaSpinner, FaBox, FaUsers, FaTicketAlt, FaDollarSign, FaCalendar } from 'react-icons/fa';
+import { FaSpinner, FaBox, FaTicketAlt, FaDollarSign, FaCalendar, FaUser } from 'react-icons/fa';
 
 export default function AdminAnalyticsPage() {
   const router = useRouter();
@@ -52,13 +52,11 @@ export default function AdminAnalyticsPage() {
     try {
       const [boatsRes, usersRes, bookingsRes] = await Promise.all([
         fetch('/api/boats?limit=1000'),
-        fetch('/api/users'),
         fetch('/api/bookings?limit=1000'),
       ]);
 
-      if (boatsRes.ok && usersRes.ok && bookingsRes.ok) {
+      if (boatsRes.ok && bookingsRes.ok) {
         const boatsData = await boatsRes.json();
-        const usersData = await usersRes.json();
         const bookingsData = await bookingsRes.json();
 
         const bookings = bookingsData.bookings || [];
@@ -68,7 +66,7 @@ export default function AdminAnalyticsPage() {
 
         setStats({
           totalBoats: boatsData.boats?.length || 0,
-          totalUsers: usersData.users?.filter((u) => u.role === 'user').length || 0,
+          totalUsers: 1,
           totalBookings: bookings.length,
           totalRevenue,
           confirmedBookings: confirmedCount,
@@ -117,8 +115,8 @@ export default function AdminAnalyticsPage() {
             color="blue"
           />
           <AdminStatCard
-            icon={FaUsers}
-            label="Total Users"
+            icon={FaUser}
+            label="Admin Account"
             value={stats.totalUsers}
             trend={8}
             color="green"

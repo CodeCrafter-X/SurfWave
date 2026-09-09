@@ -13,7 +13,7 @@ export async function GET(request, { params }) {
       return handleError('Invalid boat ID', 400);
     }
 
-    const boat = await Boat.findById(id).populate('createdBy', 'name email');
+    const boat = await Boat.findOne({ _id: id, available: true }).populate('createdBy', 'name email');
     if (!boat) {
       return handleError('Boat not found', 404);
     }

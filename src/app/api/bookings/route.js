@@ -1,7 +1,7 @@
 import { connectDB } from '@/lib/db';
 import { Booking } from '@/models/Booking';
 import { Boat } from '@/models/Boat';
-import { requireAuth, handleResponse, handleError } from '@/middleware/auth';
+import { requireAuth, requireAdmin, handleResponse, handleError } from '@/middleware/auth';
 
 export async function GET(request) {
   try {
@@ -61,9 +61,9 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const user = await requireAuth(request);
+    const user = await requireAdmin(request);
     if (!user) {
-      return handleError('Not authenticated', 401);
+      return handleError('Bookings are handled through WhatsApp inquiries', 410);
     }
 
     await connectDB();
