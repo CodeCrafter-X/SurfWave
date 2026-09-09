@@ -114,9 +114,7 @@ export default function LoginPage() {
           <Link href="/" className="text-teal-600 hover:text-teal-700 font-bold text-sm">
             ← Back to Home
           </Link>
-          <Link href="/admin/register" className="block mt-4 text-gray-500 hover:text-teal-600 text-xs">
-            Create replacement admin account
-          </Link>
+         
         </div>
       </div>
     </div>
